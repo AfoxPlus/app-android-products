@@ -25,10 +25,10 @@ import javax.inject.Named
 internal class ProductRetrofitModule {
 
     companion object {
-        const val PROVIDER_PRODUCTS_RETROFIT: String = "PROVIDER_ORDERS_RETROFIT"
-        const val PROVIDER_PRODUCTS_INTERCEPTOR: String = "PROVIDER_ORDERS_INTERCEPTOR"
-        const val PROVIDER_PRODUCTS_HTTP_CLIENT: String = "PROVIDER_ORDERS_HTTP_CLIENT"
-        const val PROVIDER_PRODUCTS_URL: String = "PROVIDER_ORDERS_URL"
+        const val PROVIDER_PRODUCTS_RETROFIT: String = "PROVIDER_PRODUCTS_RETROFIT"
+        const val PROVIDER_PRODUCTS_INTERCEPTOR: String = "PROVIDER_PRODUCTS_INTERCEPTOR"
+        const val PROVIDER_PRODUCTS_HTTP_CLIENT: String = "PROVIDER_PRODUCTS_HTTP_CLIENT"
+        const val PROVIDER_PRODUCTS_URL: String = "PROVIDER_PRODUCTS_URL"
     }
     
     @Provides
