@@ -12,6 +12,7 @@ git submodule update
 ```
 
 ## Usage
+Publish to maven local
 
 ```kotlin
 dependencies {
