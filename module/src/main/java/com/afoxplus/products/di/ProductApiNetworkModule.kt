@@ -20,12 +20,12 @@ internal object ProductApiNetworkModule {
 
     @Provides
     fun providerMeasureService(
-        retrofit: Retrofit
+        @Named(ProductRetrofitModule.PROVIDER_PRODUCTS_RETROFIT) retrofit: Retrofit
     ): MeasureApiNetwork = retrofit.create(MeasureApiNetwork::class.java)
 
     @Provides
     fun providerProductService(
-        retrofit: Retrofit
+        @Named(ProductRetrofitModule.PROVIDER_PRODUCTS_RETROFIT) retrofit: Retrofit
     ): ProductApiNetwork = retrofit.create(ProductApiNetwork::class.java)
 
 }

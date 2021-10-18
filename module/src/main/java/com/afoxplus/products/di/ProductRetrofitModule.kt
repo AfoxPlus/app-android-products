@@ -17,13 +17,22 @@ import retrofit2.Invocation
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object ProductRetrofitModule {
+internal class ProductRetrofitModule {
+
+    companion object {
+        const val PROVIDER_PRODUCTS_RETROFIT: String = "PROVIDER_ORDERS_RETROFIT"
+        const val PROVIDER_PRODUCTS_INTERCEPTOR: String = "PROVIDER_ORDERS_INTERCEPTOR"
+        const val PROVIDER_PRODUCTS_HTTP_CLIENT: String = "PROVIDER_ORDERS_HTTP_CLIENT"
+        const val PROVIDER_PRODUCTS_URL: String = "PROVIDER_ORDERS_URL"
+    }
     
     @Provides
+    @Named(PROVIDER_PRODUCTS_INTERCEPTOR)
     fun provideInterceptor(
         @ApplicationContext appContext: Context
     ): Interceptor = BaseInterceptor(
@@ -45,9 +54,10 @@ internal object ProductRetrofitModule {
     }
 
     @Provides
+    @Named(PROVIDER_PRODUCTS_RETROFIT)
     fun providerRetrofit(
-        baseUrl: String,
-        client: OkHttpClient,
+        @Named(PROVIDER_PRODUCTS_URL)baseUrl: String,
+        @Named(PROVIDER_PRODUCTS_HTTP_CLIENT) client: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
@@ -58,9 +68,10 @@ internal object ProductRetrofitModule {
     }
 
     @Provides
+    @Named(PROVIDER_PRODUCTS_HTTP_CLIENT)
     fun providerOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        apiInterceptor: Interceptor
+        @Named(PROVIDER_PRODUCTS_INTERCEPTOR)apiInterceptor: Interceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
@@ -69,18 +80,6 @@ internal object ProductRetrofitModule {
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(apiInterceptor)
             .build()
-    }
-
-    @Provides
-    fun providerGsonConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create()
-    }
-
-    @Provides
-    fun providerHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        return loggingInterceptor
     }
 
     private fun setUpMockInterceptor(
