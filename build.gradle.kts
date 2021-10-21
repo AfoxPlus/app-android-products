@@ -4,6 +4,13 @@ buildscript {
         mavenCentral()
         mavenLocal()
         maven { setUrl("https://jitpack.io") }
+        maven {
+            setUrl("https://maven.pkg.github.com/AfoxPlus/app-android-uikit")
+            credentials {
+                username = findProperty("REPO_USERID") as String? ?: System.getenv("REPO_USERID")
+                password = findProperty("REPO_TOKEN") as String? ?: System.getenv("REPO_TOKEN")
+            }
+        }
     }
     dependencies {
         classpath("com.android.tools.build:gradle:4.2.2")
@@ -20,6 +27,13 @@ allprojects {
         mavenCentral()
         mavenLocal()
         maven { setUrl("https://jitpack.io") }
+        maven {
+            setUrl("https://maven.pkg.github.com/AfoxPlus/app-android-uikit")
+            credentials {
+                username = findProperty("REPO_USERID") as String? ?: System.getenv("REPO_USERID")
+                password = findProperty("REPO_TOKEN") as String? ?: System.getenv("REPO_TOKEN")
+            }
+        }
     }
 }
 

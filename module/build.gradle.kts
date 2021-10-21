@@ -2,12 +2,13 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
+    id("dagger.hilt.android.plugin")
 }
 
+apply(from = "sonarqube.gradle")
 apply(from = "jacoco.gradle")
-apply(from = "distribution.gradle")
+apply(from = "upload.gradle")
 
 android {
     compileSdk = Versions.compileSdkVersion
@@ -39,6 +40,12 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+    }
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -58,7 +65,7 @@ dependencies {
     implementation(Deps.Arch.coroutinesCore)
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
-    implementation("com.afoxplus.android:uikit:1.0.0")
+    implementation(Deps.UI.uikit)
 
     testImplementation(Deps.Test.jUnit)
     androidTestImplementation(Deps.Test.androidJUnit)

@@ -40,6 +40,9 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+    }
 }
 
 dependencies {
@@ -53,7 +56,7 @@ dependencies {
     implementation(Deps.UI.constraintLayout)
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
-    implementation("com.afoxplus.android:uikit:1.0.0")
+    implementation(Deps.UI.uikit)
     implementation(project(mapOf("path" to ":module")))
 
     testImplementation(Deps.Test.jUnit)

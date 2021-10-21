@@ -17,22 +17,17 @@ import retrofit2.Invocation
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
-
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal class ProductRetrofitModule {
+class ProductRetrofitModule {
 
-    companion object {
-        const val PROVIDER_PRODUCTS_RETROFIT: String = "PROVIDER_PRODUCTS_RETROFIT"
-        const val PROVIDER_PRODUCTS_INTERCEPTOR: String = "PROVIDER_PRODUCTS_INTERCEPTOR"
-        const val PROVIDER_PRODUCTS_HTTP_CLIENT: String = "PROVIDER_PRODUCTS_HTTP_CLIENT"
-        const val PROVIDER_PRODUCTS_URL: String = "PROVIDER_PRODUCTS_URL"
-    }
-    
+    @ProductBaseURL
     @Provides
-    @Named(PROVIDER_PRODUCTS_INTERCEPTOR)
+    fun provideBaseUrl(): String = "http://127.0.0.1:3001/"
+
+    @ProductInterceptor
+    @Provides
     fun provideInterceptor(
         @ApplicationContext appContext: Context
     ): Interceptor = BaseInterceptor(
@@ -53,12 +48,12 @@ internal class ProductRetrofitModule {
         } ?: return@BaseInterceptor setUpInterceptor(chain)
     }
 
+    @ProductRetrofit
     @Provides
-    @Named(PROVIDER_PRODUCTS_RETROFIT)
     fun providerRetrofit(
-        @Named(PROVIDER_PRODUCTS_URL)baseUrl: String,
-        @Named(PROVIDER_PRODUCTS_HTTP_CLIENT) client: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
+        @ProductBaseURL baseUrl: String,
+        @ProductOkHttpClient client: OkHttpClient,
+        @ProductGsonConverterFactory gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -67,11 +62,11 @@ internal class ProductRetrofitModule {
             .build()
     }
 
+    @ProductOkHttpClient
     @Provides
-    @Named(PROVIDER_PRODUCTS_HTTP_CLIENT)
     fun providerOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
-        @Named(PROVIDER_PRODUCTS_INTERCEPTOR)apiInterceptor: Interceptor
+        @ProductHttpLoggingInterceptor httpLoggingInterceptor: HttpLoggingInterceptor,
+        @ProductInterceptor apiInterceptor: Interceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
@@ -80,6 +75,20 @@ internal class ProductRetrofitModule {
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(apiInterceptor)
             .build()
+    }
+
+    @ProductGsonConverterFactory
+    @Provides
+    fun providerGsonConverterFactory(): GsonConverterFactory {
+        return GsonConverterFactory.create()
+    }
+
+    @ProductHttpLoggingInterceptor
+    @Provides
+    fun providerHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        return loggingInterceptor
     }
 
     private fun setUpMockInterceptor(
