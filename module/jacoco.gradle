@@ -63,7 +63,8 @@ android {
             '**/*Extensions*.*',
             // sealed and data classes
             '**/*$Result.*',
-            '**/*$Result$*.*'
+            '**/*$Result$*.*',
+            '**/di/*'
     ]
 
     def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
