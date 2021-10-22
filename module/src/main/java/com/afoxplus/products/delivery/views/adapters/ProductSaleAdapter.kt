@@ -3,11 +3,11 @@ package com.afoxplus.products.delivery.views.adapters
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.afoxplus.products.delivery.views.adapters.viewholders.RecommendedProductViewHolder
+import com.afoxplus.products.delivery.views.adapters.viewholders.ProductSaleViewHolder
 import com.afoxplus.products.entities.Product
 
-internal class ProductRecommendedAdapter :
-    ListAdapter<Product, RecommendedProductViewHolder>(ProductMenuDiffUtilCallback()) {
+internal class ProductSaleAdapter :
+    ListAdapter<Product, ProductSaleViewHolder>(ProductMenuDiffUtilCallback()) {
 
     private var itemRecommendedProduct: OnClickItemRecommendedProduct =
         OnClickItemRecommendedProduct {}
@@ -19,10 +19,10 @@ internal class ProductRecommendedAdapter :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): RecommendedProductViewHolder =
-        RecommendedProductViewHolder.from(parent, itemRecommendedProduct)
+    ): ProductSaleViewHolder =
+        ProductSaleViewHolder.from(parent, itemRecommendedProduct)
 
-    override fun onBindViewHolder(holderRecommended: RecommendedProductViewHolder, position: Int) =
+    override fun onBindViewHolder(holderRecommended: ProductSaleViewHolder, position: Int) =
         holderRecommended.bind(getItem(position))
 
     class ProductMenuDiffUtilCallback : DiffUtil.ItemCallback<Product>() {

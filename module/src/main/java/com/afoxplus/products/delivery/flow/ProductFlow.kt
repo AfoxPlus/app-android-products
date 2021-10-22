@@ -1,6 +1,6 @@
 package com.afoxplus.products.delivery.flow
 
-import com.afoxplus.products.delivery.views.fragments.RecommendedProductsFragment
+import com.afoxplus.products.delivery.views.fragments.ProductSaleFragment
 import com.afoxplus.uikit.fragments.BaseFragment
 import javax.inject.Inject
 
@@ -14,5 +14,5 @@ interface ProductFlow {
 }
 
 internal class ProductFlowImpl @Inject constructor() : ProductFlow {
-    override fun getFragmentRecommendedProducts(): BaseFragment = RecommendedProductsFragment()
+    override fun getFragmentRecommendedProducts(): BaseFragment = ProductSaleFragment()
 }

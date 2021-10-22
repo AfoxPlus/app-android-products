@@ -18,10 +18,10 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="12dp"
         android:onClick="@{() -> onClickItemRecommendedProduct.invoke(product)}"
         app:cardCornerRadius="8dp"
-        app:cardElevation="10dp">
+        app:cardElevation="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -43,28 +43,14 @@
                 style="@style/Title_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="10dp"
+                android:layout_margin="6dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text="@{product.name}"
-                android:textColor="@color/dark_01"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/productImage"
-                tools:text="Product Name" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/productAmount"
-                style="@style/Title_10"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@{product.originalPriceWithFormat}"
-                android:textColor="@color/dark_02"
-                app:layout_constraintEnd_toEndOf="@+id/productName"
-                app:layout_constraintStart_toStartOf="@+id/productName"
-                app:layout_constraintTop_toBottomOf="@+id/productName"
-                tools:text="S/ 67.90" />
+                tools:text="Product name sale order example text for ellipsize verification in de text and nuevo product the other register" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/productAmountOffer"
@@ -73,12 +59,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="12dp"
+                android:gravity="end"
                 android:text="@{product.priceForSaleWithFormat}"
                 android:textColor="@color/dark_01"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/productName"
                 app:layout_constraintStart_toStartOf="@+id/productName"
-                app:layout_constraintTop_toBottomOf="@+id/productAmount"
+                app:layout_constraintTop_toBottomOf="@+id/productName"
                 tools:text="S/ 59.90" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
