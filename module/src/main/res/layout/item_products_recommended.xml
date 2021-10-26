@@ -10,8 +10,8 @@
             type="com.afoxplus.products.entities.Product" />
 
         <variable
-            name="onClickItemRecommendedProduct"
-            type="com.afoxplus.products.delivery.views.adapters.ProductSaleAdapter.OnClickItemRecommendedProduct" />
+            name="onClickProductOffer"
+            type="com.afoxplus.products.delivery.views.adapters.ProductAdapter.OnClickProduct" />
 
     </data>
 
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:onClick="@{() -> onClickItemRecommendedProduct.invoke(product)}"
+        android:onClick="@{() -> onClickProductOffer.invoke(product)}"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp">
 
