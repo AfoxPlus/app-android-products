@@ -3,33 +3,34 @@ package com.afoxplus.products.delivery.views.adapters.viewholders
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.afoxplus.products.databinding.ItemProductsSaleBinding
+import com.afoxplus.products.databinding.ItemProductsOfferBinding
 import com.afoxplus.products.delivery.models.ProductUIModel
 import com.afoxplus.products.delivery.views.adapters.ProductAdapter
 import com.bumptech.glide.Glide
 
-internal class ProductSaleViewHolder private constructor(
+internal class ProductOfferViewHolder private constructor(
     private val context: Context,
-    private val productSaleBinding: ItemProductsSaleBinding,
+    private val productOfferBinding: ItemProductsOfferBinding,
     private val onClickItem: ProductAdapter.OnClickProduct
-) : ProductItemViewHolder(productSaleBinding) {
+) :
+    ProductItemViewHolder(productOfferBinding) {
 
     override fun bind(productUIModel: ProductUIModel) {
         super.bind(productUIModel)
-        productSaleBinding.product = productUIModel.product
+        productOfferBinding.product = productUIModel.product
         Glide.with(context).load(productUIModel.product.imageUrl)
-            .into(productSaleBinding.productImage)
-        productSaleBinding.onClickItemRecommendedProduct = onClickItem
+            .into(productOfferBinding.imageOffer)
+        productOfferBinding.onClickProductOffer = onClickItem
     }
 
     companion object {
         fun from(
             parent: ViewGroup,
             goToOrder: ProductAdapter.OnClickProduct
-        ): ProductSaleViewHolder {
+        ): ProductOfferViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = ItemProductsSaleBinding.inflate(layoutInflater, parent, false)
-            return ProductSaleViewHolder(parent.context, binding, goToOrder)
+            val binding = ItemProductsOfferBinding.inflate(layoutInflater, parent, false)
+            return ProductOfferViewHolder(parent.context, binding, goToOrder)
         }
     }
 }

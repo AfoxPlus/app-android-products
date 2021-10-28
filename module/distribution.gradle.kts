@@ -1,11 +1,11 @@
 apply(plugin = "maven-publish")
 
-group = ConfigApp.groupId
-version = generateVersion(ConfigApp.version)
+group = ConfigureApp.groupId
+version = generateVersion(ConfigureApp.version)
 
 fun generateVersion(version: String): String {
     val branchName = getBranchName()
-    val isDevelopBranch = "develop" == branchName
+    val isDevelopBranch = "master" == branchName
     if (isDevelopBranch) {
         return version
     }
@@ -30,5 +30,5 @@ fun getBranchName(): String {
 }
 
 tasks.register("printVersion") {
-    println(generateVersion(ConfigApp.version))
+    println(generateVersion(ConfigureApp.version))
 }

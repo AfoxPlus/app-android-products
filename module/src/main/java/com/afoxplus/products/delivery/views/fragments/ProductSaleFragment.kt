@@ -5,16 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.afoxplus.products.databinding.FragmentProductsSaleBinding
-import com.afoxplus.products.delivery.viewmodels.RecommendedProductsViewModel
-import com.afoxplus.products.delivery.views.adapters.ProductSaleAdapter
+import com.afoxplus.products.delivery.viewmodels.ProductViewModel
+import com.afoxplus.products.delivery.views.adapters.ProductAdapter
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.fragments.BaseFragment
 
 internal class ProductSaleFragment : BaseFragment() {
 
     private lateinit var fragmentRecommendedProductBinding: FragmentProductsSaleBinding
-    private val recommendedProductsViewModel: RecommendedProductsViewModel by activityViewModels()
-    private val productSaleAdapter: ProductSaleAdapter by lazy { ProductSaleAdapter() }
+    private val productViewModel: ProductViewModel by activityViewModels()
+    private val productSaleAdapter: ProductAdapter by lazy { ProductAdapter() }
+    private val productOfferAdapter: ProductAdapter by lazy { ProductAdapter() }
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {
         fragmentRecommendedProductBinding = FragmentProductsSaleBinding.inflate(inflater)
@@ -22,18 +23,27 @@ internal class ProductSaleFragment : BaseFragment() {
     }
 
     override fun setUpView() {
-        fragmentRecommendedProductBinding.adapter = productSaleAdapter
-        productSaleAdapter.setOnClickItemRecommendedProductListener(::onClickItemRecommendedProduct)
-        recommendedProductsViewModel.fetchProductsRecommended()
+        fragmentRecommendedProductBinding.productSaleAdapter = productSaleAdapter
+        fragmentRecommendedProductBinding.productOfferAdapter = productOfferAdapter
+        productSaleAdapter.setOnClickProductListener(::onClickProductEvent)
+        productOfferAdapter.setOnClickProductListener(::onClickProductOfferEvent)
+        productViewModel.fetchProductsRecommended()
     }
 
     override fun observerViewModel() {
-        recommendedProductsViewModel.products.observe(viewLifecycleOwner) { products ->
+        productViewModel.productSale.observe(viewLifecycleOwner) { products ->
             productSaleAdapter.submitList(products)
+        }
+        productViewModel.productOffer.observe(viewLifecycleOwner) { products ->
+            productOfferAdapter.submitList(products)
         }
     }
 
-    private fun onClickItemRecommendedProduct(product: Product) {
-        recommendedProductsViewModel.onClickItemRecommendedProduct(product)
+    private fun onClickProductEvent(product: Product) {
+        productViewModel.onClickProductEvent(product)
+    }
+
+    private fun onClickProductOfferEvent(product: Product) {
+        productViewModel.onClickProductOfferEvent(product)
     }
 }

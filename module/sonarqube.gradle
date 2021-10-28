@@ -1,7 +1,7 @@
 apply plugin: "org.sonarqube"
 
 sonarqube {
-    version = "2.6.1"
+    version = "3.3"
 }
 
 android {
@@ -24,11 +24,11 @@ android {
 
     sonarqube {
         properties {
-            property("sonar.projectKey", ConfigApp.applicationId)
-            property("sonar.organization", "AfoxPlus")
-            property("sonar.projectName", ConfigApp.artifactId)
-            property("sonar.projectDescription", "This project is: $ConfigApp.applicationId")
-            property("sonar.projectVersion", ConfigApp.version)
+            property("sonar.projectKey", ConfigureApp.applicationId)
+            property("sonar.organization", ConfigureApp.organization)
+            property("sonar.projectName", ConfigureApp.projectName)
+            property("sonar.projectDescription", "This is an amazing project")
+            property("sonar.projectVersion", ConfigureApp.version)
             property("sonar.projectBaseDir", "${projectDir.absolutePath}")
             property("sonar.sources", "./src/main/")
             property("sonar.sourceEncoding", "UTF-8")
@@ -39,7 +39,7 @@ android {
             property("sonar.objc.file.suffixes", "-")
             property("sonar.tests", "src/test/java, src/androidTest/java")
             property("sonar.import_unknown_files", true)
-            property("sonar.androidLint.reportPaths", "${project.buildDir}/reports/lint-results.xml")
+            property("sonar.androidLint.reportPaths", "${project.buildDir}/reports/lint-results-debug.xml")
             property("sonar.java.coveragePlugin", "jacoco")
             property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
             property("sonar.coverage.exclusions", fileFilter)

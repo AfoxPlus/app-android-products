@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onClickProductOffer"
+            type="com.afoxplus.products.delivery.views.adapters.ProductAdapter.OnClickProduct" />
+
+        <variable
+            name="product"
+            type="com.afoxplus.products.entities.Product" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> onClickProductOffer.invoke(product)}"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageOffer"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleOffer"
+                style="@style/Title_09"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{product.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageOffer"
+                app:layout_constraintTop_toTopOf="@+id/imageOffer"
+                tools:text="Title product offer" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/descriptionOffer"
+                style="@style/Paragraph_04"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{product.description}"
+                app:layout_constraintEnd_toEndOf="@+id/titleOffer"
+                app:layout_constraintStart_toStartOf="@+id/titleOffer"
+                app:layout_constraintTop_toBottomOf="@+id/titleOffer"
+                tools:text="@tools:sample/lorem" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/priceOffer"
+                style="@style/Title_05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{product.priceForSaleWithFormat}"
+                app:layout_constraintBottom_toBottomOf="@+id/imageOffer"
+                app:layout_constraintStart_toStartOf="@+id/descriptionOffer"
+                tools:text="S/ 50.50" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/originalPrice"
+                style="@style/Title_09"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@{product.originalPriceWithFormat}"
+                android:textColor="@color/dark_04"
+                app:layout_constraintBottom_toBottomOf="@+id/priceOffer"
+                app:layout_constraintEnd_toEndOf="@+id/titleOffer"
+                app:layout_constraintStart_toEndOf="@+id/priceOffer"
+                app:layout_constraintTop_toTopOf="@+id/priceOffer"
+                tools:text="S/ 62.20" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dark_03"
+                app:layout_constraintBottom_toBottomOf="@+id/originalPrice"
+                app:layout_constraintEnd_toEndOf="@+id/originalPrice"
+                app:layout_constraintStart_toStartOf="@+id/originalPrice"
+                app:layout_constraintTop_toTopOf="@+id/originalPrice" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

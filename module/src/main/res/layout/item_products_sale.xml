@@ -11,7 +11,7 @@
 
         <variable
             name="onClickItemRecommendedProduct"
-            type="com.afoxplus.products.delivery.views.adapters.ProductSaleAdapter.OnClickItemRecommendedProduct" />
+            type="com.afoxplus.products.delivery.views.adapters.ProductAdapter.OnClickProduct" />
 
     </data>
 
@@ -30,7 +30,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/productImage"
                 android:layout_width="match_parent"
-                android:layout_height="112dp"
+                android:layout_height="130dp"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toTopOf="@+id/productName"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/productImage"
-                tools:text="Product name sale order example text for ellipsize verification in de text and nuevo product the other register" />
+                tools:text="Product Name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/productDescription"
+                style="@style/Paragraph_04"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{product.description}"
+                app:layout_constraintEnd_toEndOf="@id/productName"
+                app:layout_constraintStart_toStartOf="@+id/productName"
+                app:layout_constraintTop_toBottomOf="@+id/productName"
+                tools:text="Product description" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/productAmountOffer"
@@ -63,9 +76,9 @@
                 android:text="@{product.priceForSaleWithFormat}"
                 android:textColor="@color/dark_01"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/productName"
-                app:layout_constraintStart_toStartOf="@+id/productName"
-                app:layout_constraintTop_toBottomOf="@+id/productName"
+                app:layout_constraintEnd_toEndOf="@+id/productDescription"
+                app:layout_constraintStart_toStartOf="@+id/productDescription"
+                app:layout_constraintTop_toBottomOf="@+id/productDescription"
                 tools:text="S/ 59.90" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
