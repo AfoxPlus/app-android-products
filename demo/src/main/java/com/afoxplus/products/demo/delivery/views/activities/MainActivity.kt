@@ -30,7 +30,7 @@ class MainActivity : BaseActivity() {
         viewPagerAdapter = ViewPagerAdapter(
             supportFragmentManager,
             lifecycle,
-            listOf(productFlow.getFragmentRecommendedProducts())
+            listOf(productFlow.getProductMenuFragment(), productFlow.getProductsSaleFragment())
         )
         binding.viewPagerMarket.adapter = viewPagerAdapter
         binding.viewPagerMarket.orientation = ViewPager2.ORIENTATION_HORIZONTAL

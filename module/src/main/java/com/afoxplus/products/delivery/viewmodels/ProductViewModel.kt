@@ -22,28 +22,73 @@ internal class ProductViewModel @Inject constructor(
     private val productEventBus: EventBusListener
 ) : ViewModel() {
 
-    private val mProductSales: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
-    val productSale: LiveData<List<ProductUIModel>> get() = mProductSales
+    private val mProductsSale: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
+    val productsSale: LiveData<List<ProductUIModel>> get() = mProductsSale
 
     private val mProductOffer: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
     val productOffer: LiveData<List<ProductUIModel>> get() = mProductOffer
 
-    fun fetchProductsRecommended() = viewModelScope.launch(Dispatchers.IO) {
+    private val mProductAppetizer: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
+    val productAppetizer: LiveData<List<ProductUIModel>> get() = mProductAppetizer
+
+    private val mProductsMenu: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
+    val productMenu: LiveData<List<ProductUIModel>> get() = mProductsMenu
+
+    fun fetchProductSales() = viewModelScope.launch(Dispatchers.IO) {
         try {
-            //TODO: Create use case for get recommended products
+            //TODO: Create use case for get product sales
             val result = findProductsUseCase("pizza")
-            mProductSales.postValue(result.map { item ->
+            mProductsSale.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_SALE,
                     item
                 )
             })
+        } catch (ex: Exception) {
+            Log.d("PRODUCT", "${ex}")
+        }
+    }
+
+    fun fetchProductOffers() = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            //TODO: Create use case for get product offers
+            val result = findProductsUseCase("pizza")
             mProductOffer.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_OFFER,
                     item
                 )
             }.subList(0, 2))
+        } catch (ex: Exception) {
+            Log.d("PRODUCT", "${ex}")
+        }
+    }
+
+    fun fetchProductsAppetizer() = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            //TODO: Create use case for get recommended products
+            val result = findProductsUseCase("pizza")
+            mProductAppetizer.postValue(result.map { item ->
+                ProductUIModel(
+                    ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER,
+                    item
+                )
+            }.subList(3, 5))
+        } catch (ex: Exception) {
+            Log.d("PRODUCT", "${ex}")
+        }
+    }
+
+    fun fetchProductsMenu() = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            //TODO: Create use case for get product Menu
+            val result = findProductsUseCase("pizza")
+            mProductsMenu.postValue(result.map { item ->
+                ProductUIModel(
+                    ProductUIModel.VIEW_TYPE_PRODUCT_MENU,
+                    item
+                )
+            })
         } catch (ex: Exception) {
             Log.d("PRODUCT", "${ex}")
         }
