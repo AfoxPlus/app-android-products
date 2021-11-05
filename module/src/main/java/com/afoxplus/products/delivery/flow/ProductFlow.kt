@@ -1,5 +1,6 @@
 package com.afoxplus.products.delivery.flow
 
+import com.afoxplus.products.delivery.views.fragments.ProductHomeOfferFragment
 import com.afoxplus.products.delivery.views.fragments.ProductMenuFragment
 import com.afoxplus.products.delivery.views.fragments.ProductSaleFragment
 import com.afoxplus.uikit.fragments.BaseFragment
@@ -12,9 +13,11 @@ interface ProductFlow {
 
     fun getProductsSaleFragment(): BaseFragment
     fun getProductMenuFragment(): BaseFragment
+    fun getProductHomeOfferFragment(): BaseFragment
 }
 
 internal class ProductFlowImpl @Inject constructor() : ProductFlow {
     override fun getProductsSaleFragment(): BaseFragment = ProductSaleFragment()
     override fun getProductMenuFragment(): BaseFragment = ProductMenuFragment()
+    override fun getProductHomeOfferFragment(): BaseFragment = ProductHomeOfferFragment()
 }

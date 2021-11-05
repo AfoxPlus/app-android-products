@@ -12,7 +12,8 @@ internal data class ProductSaleStrategyResponse(
         fun mapToProductSaleStrategy(strategyResponse: ProductSaleStrategyResponse): SaleProductStrategy {
             return DiscountByOffer(
                 strategyCode = strategyResponse.strategyCode,
-                percentDiscount = strategyResponse.parameters.percentage ?: 0.0
+                percentDiscount = strategyResponse.parameters.percentage ?: 0.0,
+                marketName = strategyResponse.parameters.marketName ?: ""
             )
         }
     }

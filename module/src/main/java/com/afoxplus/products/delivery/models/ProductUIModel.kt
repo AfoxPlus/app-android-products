@@ -8,5 +8,6 @@ internal data class ProductUIModel(val viewType: Int, val product: Product) {
         const val VIEW_TYPE_PRODUCT_OFFER = 1
         const val VIEW_TYPE_PRODUCT_MENU = 2
         const val VIEW_TYPE_PRODUCT_APPETIZER = 3
+        const val VIEW_TYPE_PRODUCT_HOME_OFFER = 4
     }
 }

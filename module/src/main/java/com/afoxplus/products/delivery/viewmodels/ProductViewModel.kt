@@ -34,6 +34,9 @@ internal class ProductViewModel @Inject constructor(
     private val mProductsMenu: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
     val productMenu: LiveData<List<ProductUIModel>> get() = mProductsMenu
 
+    private val mProductsHomeOffer: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
+    val productsHomeOffer: LiveData<List<ProductUIModel>> get() = mProductsHomeOffer
+
     fun fetchProductSales() = viewModelScope.launch(Dispatchers.IO) {
         try {
             //TODO: Create use case for get product sales
@@ -89,6 +92,21 @@ internal class ProductViewModel @Inject constructor(
                     item
                 )
             })
+        } catch (ex: Exception) {
+            Log.d("PRODUCT", "${ex}")
+        }
+    }
+
+    fun fetchProductsHomeOffer() = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            //TODO: Create use case for get fetchProductsHomeOffer
+            val result = findProductsUseCase("pizza")
+            mProductsHomeOffer.postValue(result.map { item ->
+                ProductUIModel(
+                    ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER,
+                    item
+                )
+            }.subList(3, 6))
         } catch (ex: Exception) {
             Log.d("PRODUCT", "${ex}")
         }

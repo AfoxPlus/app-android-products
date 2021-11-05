@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.afoxplus.products.delivery.models.ProductUIModel
 import com.afoxplus.products.delivery.views.adapters.diffutils.ProductDiffUtilCallback
 import com.afoxplus.products.delivery.views.adapters.viewholders.ProductAppetizerViewHolder
+import com.afoxplus.products.delivery.views.adapters.viewholders.ProductHomeOfferViewHolder
 import com.afoxplus.products.delivery.views.adapters.viewholders.ProductItemViewHolder
 import com.afoxplus.products.delivery.views.adapters.viewholders.ProductMenuViewHolder
 import com.afoxplus.products.delivery.views.adapters.viewholders.ProductOfferViewHolder
@@ -33,6 +34,8 @@ internal class ProductAdapter :
                 ProductMenuViewHolder.from(parent, onClickProduct)
             ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER ->
                 ProductAppetizerViewHolder.from(parent)
+            ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER ->
+                ProductHomeOfferViewHolder.from(parent, onClickProduct)
             else -> ProductSaleViewHolder.from(parent, onClickProduct)
         }
     }

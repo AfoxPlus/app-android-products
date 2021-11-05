@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.afoxplus.products.entities.Product" />
+
+        <variable
+            name="onClickItemRecommendedProduct"
+            type="com.afoxplus.products.delivery.views.adapters.ProductAdapter.OnClickProduct" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:onClick="@{() -> onClickItemRecommendedProduct.invoke(product)}"
+        app:cardBackgroundColor="#FFC8BD"
+        app:cardCornerRadius="13dp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:background="#FFC8BD">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageHomeOffer"
+                android:layout_width="140dp"
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/marketNameHomeOffer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/titleHomeOffer"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleHomeOffer"
+                style="@style/Title_05"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/uikit_bold"
+                android:gravity="center"
+                android:maxLines="2"
+                android:padding="16dp"
+                android:text="@{product.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageHomeOffer"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Pizza dos por uno" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/priceHomeOffer"
+                style="@style/Title_08"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+
+                android:gravity="center"
+                android:text="@{product.priceForSaleWithFormat}"
+                app:layout_constraintEnd_toStartOf="@+id/originalPriceHomeOffer"
+                app:layout_constraintStart_toEndOf="@+id/imageHomeOffer"
+                app:layout_constraintTop_toBottomOf="@+id/titleHomeOffer"
+                tools:text="S/ 50.20" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/originalPriceHomeOffer"
+                style="@style/Title_08"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/uikit_regular"
+                android:gravity="center"
+                android:text="@{product.originalPriceWithFormat}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/priceHomeOffer"
+                app:layout_constraintTop_toBottomOf="@+id/titleHomeOffer"
+                tools:text="S/ 90.99" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/dark_03"
+                app:layout_constraintBottom_toBottomOf="@+id/originalPriceHomeOffer"
+                app:layout_constraintEnd_toEndOf="@+id/originalPriceHomeOffer"
+                app:layout_constraintStart_toStartOf="@+id/originalPriceHomeOffer"
+                app:layout_constraintTop_toTopOf="@+id/originalPriceHomeOffer" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/marketNameHomeOffer"
+                style="@style/Paragraph_03"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="4dp"
+                android:paddingTop="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageHomeOffer"
+                app:layout_constraintTop_toBottomOf="@+id/priceHomeOffer"
+                tools:text="Rest. Doña Esther" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
