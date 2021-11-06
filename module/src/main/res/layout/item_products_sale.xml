@@ -60,10 +60,11 @@
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="@{product.description}"
+                app:layout_constraintBottom_toTopOf="@+id/productAmountOffer"
                 app:layout_constraintEnd_toEndOf="@id/productName"
                 app:layout_constraintStart_toStartOf="@+id/productName"
                 app:layout_constraintTop_toBottomOf="@+id/productName"
-                tools:text="Product description" />
+                tools:text="@tools:sample/lorem/random" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/productAmountOffer"
@@ -71,14 +72,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="6dp"
                 android:gravity="end"
                 android:text="@{product.priceForSaleWithFormat}"
                 android:textColor="@color/dark_01"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/productDescription"
                 app:layout_constraintStart_toStartOf="@+id/productDescription"
-                app:layout_constraintTop_toBottomOf="@+id/productDescription"
                 tools:text="S/ 59.90" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

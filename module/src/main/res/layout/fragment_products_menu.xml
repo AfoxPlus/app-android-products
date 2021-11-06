@@ -14,65 +14,70 @@
             type="com.afoxplus.products.delivery.views.adapters.ProductAdapter" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_04">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/titleAppetizer"
-            style="@style/Title_10"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/uikit_semi_bold"
-            android:text="@string/products_appetizer_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:background="@color/light_04">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerProductAppetizer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="16dp"
-            android:adapter="@{productAppetizerAdapter}"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleAppetizer"
-            tools:itemCount="4"
-            tools:listitem="@layout/item_products_appetizer" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleAppetizer"
+                style="@style/Title_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/uikit_semi_bold"
+                android:text="@string/products_appetizer_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/titleMenu"
-            style="@style/Title_10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/uikit_semi_bold"
-            android:text="@string/products_menu_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerProductAppetizer" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerProductAppetizer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:adapter="@{productAppetizerAdapter}"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleAppetizer"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_products_appetizer" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerProductMenu"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="16dp"
-            android:adapter="@{productMenuAdapter}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleMenu"
-            tools:listitem="@layout/item_products_menu" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleMenu"
+                style="@style/Title_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/uikit_semi_bold"
+                android:text="@string/products_menu_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerProductAppetizer" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerProductMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:adapter="@{productMenuAdapter}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleMenu"
+                tools:listitem="@layout/item_products_menu" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

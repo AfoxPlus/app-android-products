@@ -14,36 +14,41 @@
             type="com.afoxplus.products.delivery.views.adapters.ProductAdapter" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_04">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerOffers"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adapter="@{productOfferAdapter}"
-            android:orientation="horizontal"
-            android:layout_margin="12dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:itemCount="1"
-            tools:listitem="@layout/item_products_offer" />
+            android:layout_height="match_parent"
+            android:background="@color/light_04">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerProducts"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="12dp"
-            android:adapter="@{productSaleAdapter}"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerOffers"
-            app:spanCount="2"
-            tools:listitem="@layout/item_products_sale" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerOffers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:adapter="@{productOfferAdapter}"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_products_offer" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerProducts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:adapter="@{productSaleAdapter}"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerOffers"
+                app:spanCount="2"
+                tools:listitem="@layout/item_products_sale" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
