@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.afoxplus.products.entities.Product" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appetizerImage"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_margin="8dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toTopOf="@+id/appetizerTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appetizerTitle"
+                style="@style/Paragraph_03"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="11dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@{product.name}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/appetizerImage"
+                app:layout_constraintStart_toStartOf="@+id/appetizerImage"
+                app:layout_constraintTop_toBottomOf="@+id/appetizerImage"
+                tools:text="Title appetizer" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

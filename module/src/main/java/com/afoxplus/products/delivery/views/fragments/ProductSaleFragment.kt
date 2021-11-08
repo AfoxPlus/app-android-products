@@ -26,12 +26,13 @@ internal class ProductSaleFragment : BaseFragment() {
         fragmentRecommendedProductBinding.productSaleAdapter = productSaleAdapter
         fragmentRecommendedProductBinding.productOfferAdapter = productOfferAdapter
         productSaleAdapter.setOnClickProductListener(::onClickProductEvent)
-        productOfferAdapter.setOnClickProductListener(::onClickProductOfferEvent)
-        productViewModel.fetchProductsRecommended()
+        productOfferAdapter.setOnClickProductListener(::onClickProductEvent)
+        productViewModel.fetchProductOffers()
+        productViewModel.fetchProductSales()
     }
 
     override fun observerViewModel() {
-        productViewModel.productSale.observe(viewLifecycleOwner) { products ->
+        productViewModel.productsSale.observe(viewLifecycleOwner) { products ->
             productSaleAdapter.submitList(products)
         }
         productViewModel.productOffer.observe(viewLifecycleOwner) { products ->
@@ -41,9 +42,5 @@ internal class ProductSaleFragment : BaseFragment() {
 
     private fun onClickProductEvent(product: Product) {
         productViewModel.onClickProductEvent(product)
-    }
-
-    private fun onClickProductOfferEvent(product: Product) {
-        productViewModel.onClickProductOfferEvent(product)
     }
 }

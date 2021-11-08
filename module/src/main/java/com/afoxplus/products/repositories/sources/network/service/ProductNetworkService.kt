@@ -9,7 +9,7 @@ import com.afoxplus.products.repositories.sources.network.api.ProductApiNetwork
 import com.afoxplus.products.repositories.sources.network.api.response.ProductResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductSaleStrategyResponse
 import com.afoxplus.uikit.service.extensions.map
-import okio.IOException
+import java.io.IOException
 import javax.inject.Inject
 
 internal class ProductNetworkService @Inject constructor(private val productService: ProductApiNetwork) :

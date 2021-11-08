@@ -15,71 +15,74 @@
 
     </data>
 
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
         android:onClick="@{() -> onClickItemRecommendedProduct.invoke(product)}"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="2dp">
+        app:cardBackgroundColor="@color/light_01"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/productImage"
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:id="@+id/productMenuImage"
+                android:layout_width="95dp"
+                android:layout_height="80dp"
                 android:scaleType="fitXY"
-                app:layout_constraintBottom_toTopOf="@+id/productName"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/productName"
+                android:id="@+id/productMenuTitle"
                 style="@style/Title_10"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="12dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@{product.name}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/productImage"
-                tools:text="Product Name" />
+                app:layout_constraintEnd_toStartOf="@+id/productMenuPrice"
+                app:layout_constraintStart_toEndOf="@+id/productMenuImage"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Pure con asado de rez" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/productDescription"
-                style="@style/Paragraph_04"
+                style="@style/Paragraph_03"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="3"
+                android:maxLines="2"
                 android:text="@{product.description}"
-                app:layout_constraintBottom_toTopOf="@+id/productAmountOffer"
-                app:layout_constraintEnd_toEndOf="@id/productName"
-                app:layout_constraintStart_toStartOf="@+id/productName"
-                app:layout_constraintTop_toBottomOf="@+id/productName"
-                tools:text="@tools:sample/lorem/random" />
+                android:textColor="@color/dark_04"
+                app:layout_constraintEnd_toEndOf="@+id/productMenuTitle"
+                app:layout_constraintStart_toStartOf="@+id/productMenuTitle"
+                app:layout_constraintTop_toBottomOf="@+id/productMenuTitle"
+                tools:text="Arroz, ensalada, menestra y refresco" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/productAmountOffer"
-                style="@style/Title_05"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="6dp"
-                android:gravity="end"
+                android:id="@+id/productMenuPrice"
+                style="@style/Title_08"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_margin="12dp"
+                android:gravity="center"
                 android:text="@{product.priceForSaleWithFormat}"
-                android:textColor="@color/dark_01"
+                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/productDescription"
-                app:layout_constraintStart_toStartOf="@+id/productDescription"
-                tools:text="S/ 59.90" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="S/ 20.50" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

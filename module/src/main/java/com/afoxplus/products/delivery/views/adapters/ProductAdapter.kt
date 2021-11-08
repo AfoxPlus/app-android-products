@@ -1,10 +1,13 @@
 package com.afoxplus.products.delivery.views.adapters
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.afoxplus.products.delivery.models.ProductUIModel
+import com.afoxplus.products.delivery.views.adapters.diffutils.ProductDiffUtilCallback
+import com.afoxplus.products.delivery.views.adapters.viewholders.ProductAppetizerViewHolder
+import com.afoxplus.products.delivery.views.adapters.viewholders.ProductHomeOfferViewHolder
 import com.afoxplus.products.delivery.views.adapters.viewholders.ProductItemViewHolder
+import com.afoxplus.products.delivery.views.adapters.viewholders.ProductMenuViewHolder
 import com.afoxplus.products.delivery.views.adapters.viewholders.ProductOfferViewHolder
 import com.afoxplus.products.delivery.views.adapters.viewholders.ProductSaleViewHolder
 import com.afoxplus.products.entities.Product
@@ -27,20 +30,18 @@ internal class ProductAdapter :
                 ProductSaleViewHolder.from(parent, onClickProduct)
             ProductUIModel.VIEW_TYPE_PRODUCT_OFFER ->
                 ProductOfferViewHolder.from(parent, onClickProduct)
+            ProductUIModel.VIEW_TYPE_PRODUCT_MENU ->
+                ProductMenuViewHolder.from(parent, onClickProduct)
+            ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER ->
+                ProductAppetizerViewHolder.from(parent)
+            ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER ->
+                ProductHomeOfferViewHolder.from(parent, onClickProduct)
             else -> ProductSaleViewHolder.from(parent, onClickProduct)
         }
     }
 
     override fun onBindViewHolder(holder: ProductItemViewHolder, position: Int) =
         holder.bind(getItem(position))
-
-    class ProductDiffUtilCallback : DiffUtil.ItemCallback<ProductUIModel>() {
-        override fun areItemsTheSame(oldItem: ProductUIModel, newItem: ProductUIModel): Boolean =
-            oldItem.product.code == newItem.product.code
-
-        override fun areContentsTheSame(oldItem: ProductUIModel, newItem: ProductUIModel): Boolean =
-            oldItem.product == newItem.product
-    }
 
     override fun getItemViewType(position: Int): Int = getItem(position).viewType
 

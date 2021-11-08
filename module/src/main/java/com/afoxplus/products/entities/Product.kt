@@ -1,6 +1,7 @@
 package com.afoxplus.products.entities
 
 import android.os.Parcelable
+import com.afoxplus.products.entities.bussineslogic.OfferProductStrategy
 import com.afoxplus.products.entities.bussineslogic.SaleProductStrategy
 import kotlinx.parcelize.Parcelize
 
@@ -40,4 +41,9 @@ data class Product(
     fun getOriginalPriceWithFormat(): String =
         "${currency.value} ${String.format("%.2f", getOriginalPrice())}"
 
+    fun getOfferProductStrategy(): OfferProductStrategy? {
+        return if (saleStrategy is OfferProductStrategy) {
+            saleStrategy as OfferProductStrategy
+        } else null
+    }
 }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="products_appetizer_title">Entradas</string>
+    <string name="products_menu_title">Segundos</string>
+</resources>
