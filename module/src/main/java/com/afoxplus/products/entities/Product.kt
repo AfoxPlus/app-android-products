@@ -15,7 +15,8 @@ data class Product(
     val currency: Currency,
     var stock: Int,
     private var price: Double,
-    var saleStrategy: SaleProductStrategy? = null
+    val productType: ProductType,
+    var saleStrategy: SaleProductStrategy? = null,
 ) : Parcelable {
 
     fun addSaleProductStrategy(saleStrategy: SaleProductStrategy) {
@@ -46,4 +47,7 @@ data class Product(
             saleStrategy as OfferProductStrategy
         } else null
     }
+
+    fun isMenuDishType(): Boolean = productType is MenuDish
+    fun getMenuDishType(): MenuDish? = productType as MenuDish?
 }

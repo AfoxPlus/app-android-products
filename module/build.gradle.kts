@@ -7,7 +7,7 @@ plugins {
 }
 
 apply(from = "sonarqube.gradle")
-/*apply(from = "jacoco.gradle")*/
+apply(from = "jacoco.gradle")
 apply(from = "upload.gradle")
 
 android {
@@ -28,6 +28,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
+
+        getByName("debug") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+        }
     }
 
     compileOptions {
@@ -41,6 +48,10 @@ android {
         viewBinding = true
         dataBinding = true
     }
+
+    lint {
+        isCheckDependencies = true
+    }
 }
 
 dependencies {
@@ -50,17 +61,19 @@ dependencies {
     implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
     implementation(Deps.Jetpack.appcompat)
+
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
     implementation(Deps.UI.glide)
     kapt(Deps.UI.glideCompiler)
+    implementation(Deps.UI.uikit)
+
     api(Deps.Arch.retrofit2)
     api(Deps.Arch.gson)
     api(Deps.Arch.loggingInterceptor)
     implementation(Deps.Arch.coroutinesCore)
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
-    implementation(Deps.UI.uikit)
 
     testImplementation(Deps.Test.jUnit)
     androidTestImplementation(Deps.Test.androidJUnit)

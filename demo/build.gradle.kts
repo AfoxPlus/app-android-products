@@ -11,7 +11,7 @@ android {
     buildToolsVersion = Versions.buildToolsVersion
 
     defaultConfig {
-        applicationId = "com.afoxplus.app_android_home.demo"
+        applicationId = "com.afoxplus.app_android_products.demo"
         minSdk = Versions.minSdkVersion
         targetSdk = Versions.targetSdkVersion
         versionCode = 1
@@ -40,6 +40,10 @@ android {
         viewBinding = true
         dataBinding = true
     }
+
+    lint {
+        isCheckDependencies = true
+    }
 }
 
 dependencies {
@@ -49,11 +53,13 @@ dependencies {
     implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
     implementation(Deps.Jetpack.appcompat)
+
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
+    implementation(Deps.UI.uikit)
+
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
-    implementation(Deps.UI.uikit)
     implementation(project(mapOf("path" to ":module")))
 
     testImplementation(Deps.Test.jUnit)
