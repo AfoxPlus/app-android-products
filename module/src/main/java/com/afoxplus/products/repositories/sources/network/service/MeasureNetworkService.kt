@@ -1,10 +1,10 @@
 package com.afoxplus.products.repositories.sources.network.service
 
+import com.afoxplus.network.extensions.map
 import com.afoxplus.products.entities.Measure
 import com.afoxplus.products.repositories.sources.network.MeasureNetworkDataSource
 import com.afoxplus.products.repositories.sources.network.api.MeasureApiNetwork
 import com.afoxplus.products.repositories.sources.network.api.response.MeasureResponse
-import com.afoxplus.uikit.service.extensions.map
 import javax.inject.Inject
 
 internal class MeasureNetworkService @Inject constructor(private val measureService: MeasureApiNetwork) :

@@ -68,6 +68,7 @@ dependencies {
     kapt(Deps.UI.glideCompiler)
     implementation(Deps.UI.uikit)
 
+    api(Deps.Arch.network)
     api(Deps.Arch.retrofit2)
     api(Deps.Arch.gson)
     api(Deps.Arch.loggingInterceptor)
