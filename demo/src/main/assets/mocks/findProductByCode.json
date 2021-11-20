@@ -14,5 +14,9 @@
     "parameters": {
       "percentage": 0.20
     }
+  },
+  "productType": {
+    "code": "PGEN",
+    "name": "Generic"
   }
 }

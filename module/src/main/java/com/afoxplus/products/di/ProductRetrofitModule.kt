@@ -2,9 +2,9 @@ package com.afoxplus.products.di
 
 import android.content.Context
 import android.os.Build
+import com.afoxplus.network.annotations.MockService
+import com.afoxplus.network.interceptors.BaseInterceptor
 import com.afoxplus.uikit.extensions.convertToString
-import com.afoxplus.uikit.service.BaseInterceptor
-import com.afoxplus.uikit.service.annotations.MockService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ class ProductRetrofitModule {
 
     @ProductBaseURL
     @Provides
-    fun provideBaseUrl(): String = "http://127.0.0.1:3001/"
+    fun provideBaseUrl(): String = "https://w2p9wfkkpd.execute-api.us-east-1.amazonaws.com/prod/"
 
     @ProductInterceptor
     @Provides
