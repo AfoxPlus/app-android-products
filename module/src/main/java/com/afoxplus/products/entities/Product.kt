@@ -3,6 +3,7 @@ package com.afoxplus.products.entities
 import android.os.Parcelable
 import com.afoxplus.products.entities.bussineslogic.OfferProductStrategy
 import com.afoxplus.products.entities.bussineslogic.SaleProductStrategy
+import com.afoxplus.products.entities.types.MenuDish
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

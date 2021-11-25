@@ -1,8 +1,8 @@
 package com.afoxplus.products.repositories.sources.network.api.response
 
 import com.afoxplus.products.entities.ProductType
-import com.afoxplus.products.entities.types.GenericType
-import com.afoxplus.products.entities.types.MenuDishType
+import com.afoxplus.products.entities.types.Generic
+import com.afoxplus.products.entities.types.MenuDish
 import com.google.gson.annotations.SerializedName
 
 internal data class ProductTypeResponse(
@@ -13,11 +13,11 @@ internal data class ProductTypeResponse(
         private const val MENU_PRODUCT_TYPE = "MENU"
         fun mapToProductType(response: ProductTypeResponse): ProductType {
             return when (response.code) {
-                MENU_PRODUCT_TYPE -> MenuDishType(code = response.code, name = response.name)
+                MENU_PRODUCT_TYPE -> MenuDish.build(code = response.code, name = response.name)
                 else -> getGenericProduct()
             }
         }
 
-        fun getGenericProduct(): ProductType = GenericType("G001", "Generic")
+        fun getGenericProduct(): ProductType = Generic.build(code = "G001", name = "Generic")
     }
 }
