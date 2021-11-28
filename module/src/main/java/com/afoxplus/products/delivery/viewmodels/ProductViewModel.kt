@@ -9,7 +9,7 @@ import com.afoxplus.products.delivery.models.ProductUIModel
 import com.afoxplus.products.delivery.views.events.OnClickProductOfferEvent
 import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.products.entities.Product
-import com.afoxplus.products.usecases.actions.FetchProduct
+import com.afoxplus.products.usecases.actions.*
 import com.afoxplus.uikit.bus.EventBusListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ProductViewModel @Inject constructor(
-    private val findProductsUseCase: FetchProduct,
+    private val fetchProducts: FetchProduct,
+    private val fetchHomeOffer: FetchHomeOffer,
+    private val fetchSaleOffer: FetchSaleOffer,
+    private val fetchAppetizer: FetchAppetizer,
+    private val fetchMenu: FetchMenu,
     private val productEventBus: EventBusListener
 ) : ViewModel() {
 
@@ -39,8 +43,7 @@ internal class ProductViewModel @Inject constructor(
 
     fun fetchProductSales() = viewModelScope.launch(Dispatchers.IO) {
         try {
-            //TODO: Create use case for get product sales
-            val result = findProductsUseCase("")
+            val result = fetchProducts("")
             mProductsSale.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_SALE,
@@ -48,14 +51,13 @@ internal class ProductViewModel @Inject constructor(
                 )
             })
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "${ex}")
+            Log.d("PRODUCT", "$ex")
         }
     }
 
     fun fetchProductOffers() = viewModelScope.launch(Dispatchers.IO) {
         try {
-            //TODO: Create use case for get product offers
-            val result = findProductsUseCase("")
+            val result = fetchSaleOffer()
             mProductOffer.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_OFFER,
@@ -63,14 +65,13 @@ internal class ProductViewModel @Inject constructor(
                 )
             }.subList(0, 2))
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "${ex}")
+            Log.d("PRODUCT", "$ex")
         }
     }
 
     fun fetchProductsAppetizer() = viewModelScope.launch(Dispatchers.IO) {
         try {
-            //TODO: Create use case for get recommended products
-            val result = findProductsUseCase("")
+            val result = fetchAppetizer()
             mProductAppetizer.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER,
@@ -78,14 +79,13 @@ internal class ProductViewModel @Inject constructor(
                 )
             }.subList(3, 5))
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "${ex}")
+            Log.d("PRODUCT", "$ex")
         }
     }
 
     fun fetchProductsMenu() = viewModelScope.launch(Dispatchers.IO) {
         try {
-            //TODO: Create use case for get product Menu
-            val result = findProductsUseCase("")
+            val result = fetchMenu()
             mProductsMenu.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_MENU,
@@ -93,14 +93,13 @@ internal class ProductViewModel @Inject constructor(
                 )
             })
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "${ex}")
+            Log.d("PRODUCT", "$ex")
         }
     }
 
     fun fetchProductsHomeOffer() = viewModelScope.launch(Dispatchers.IO) {
         try {
-            //TODO: Create use case for get fetchProductsHomeOffer
-            val result = findProductsUseCase("")
+            val result = fetchHomeOffer()
             mProductsHomeOffer.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER,
@@ -108,7 +107,7 @@ internal class ProductViewModel @Inject constructor(
                 )
             }.subList(3, 6))
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "${ex}")
+            Log.d("PRODUCT", "$ex")
         }
     }
 

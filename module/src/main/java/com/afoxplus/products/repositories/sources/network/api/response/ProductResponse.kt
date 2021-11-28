@@ -12,7 +12,7 @@ internal data class ProductResponse(
     @SerializedName("price") var price: Double,
     @SerializedName("measure") val measure: MeasureResponse,
     @SerializedName("currency") val currency: CurrencyResponse,
-    @SerializedName("saleStrategy") var strategy: ProductSaleStrategyResponse,
+    @SerializedName("saleStrategy") var strategy: ProductSaleStrategyResponse? = null,
     @SerializedName("productType") val productType: ProductTypeResponse? = null
 ) {
     companion object {
@@ -29,11 +29,11 @@ internal data class ProductResponse(
                 ProductTypeResponse.mapToProductType(type)
             } ?: ProductTypeResponse.getGenericProduct()
         ).apply {
-            addSaleProductStrategy(
-                ProductSaleStrategyResponse.mapToProductSaleStrategy(
-                    productResponse.strategy
+            productResponse.strategy?.let { strategy ->
+                addSaleProductStrategy(
+                    ProductSaleStrategyResponse.mapToProductSaleStrategy(strategy)
                 )
-            )
+            }
         }
 
         fun mapToProduct(products: List<ProductResponse>): List<Product> =

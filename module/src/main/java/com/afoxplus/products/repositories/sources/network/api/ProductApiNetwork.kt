@@ -21,6 +21,18 @@ internal interface ProductApiNetwork {
         @Body query: ProductQueryRequest
     ): Response<BaseResponse<List<ProductResponse>>>
 
+    @GET("$PATH_PRODUCT/sale_offers")
+    suspend fun fetchSaleOffers(@HeaderMap headers: Map<String, String>): Response<BaseResponse<List<ProductResponse>>>
+
+    @GET("$PATH_PRODUCT/home_offers")
+    suspend fun fetchHomeOffers(): Response<BaseResponse<List<ProductResponse>>>
+
+    @GET("$PATH_PRODUCT/appetizers")
+    suspend fun fetchAppetizers(@HeaderMap headers: Map<String, String>): Response<BaseResponse<List<ProductResponse>>>
+
+    @GET("$PATH_PRODUCT/menu")
+    suspend fun fetchMenu(@HeaderMap headers: Map<String, String>): Response<BaseResponse<List<ProductResponse>>>
+
     @GET("$PATH_PRODUCT/search/{code}")
     suspend fun find(@Path("code") code: String): Response<BaseResponse<ProductResponse>>
 
