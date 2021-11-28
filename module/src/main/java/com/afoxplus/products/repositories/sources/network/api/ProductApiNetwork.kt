@@ -1,15 +1,12 @@
 package com.afoxplus.products.repositories.sources.network.api
 
 import com.afoxplus.network.response.BaseResponse
-import com.afoxplus.products.repositories.sources.network.api.request.ProductFilterRequest
+import com.afoxplus.products.repositories.sources.network.api.request.ProductQueryRequest
 import com.afoxplus.products.repositories.sources.network.api.response.ProductResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductSaleStrategyResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductStockResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 internal interface ProductApiNetwork {
     companion object {
@@ -19,7 +16,10 @@ internal interface ProductApiNetwork {
     }
 
     @POST("$PATH_PRODUCT/filter")
-    suspend fun fetch(@Body filter: ProductFilterRequest): Response<BaseResponse<List<ProductResponse>>>
+    suspend fun fetch(
+        @HeaderMap headers: Map<String, String>,
+        @Body query: ProductQueryRequest
+    ): Response<BaseResponse<List<ProductResponse>>>
 
     @GET("$PATH_PRODUCT/search/{code}")
     suspend fun find(@Path("code") code: String): Response<BaseResponse<ProductResponse>>

@@ -1,7 +1,5 @@
 package com.afoxplus.products.repositories.sources.network.api.response
 
-import com.afoxplus.products.entities.Currency
-import com.afoxplus.products.entities.Measure
 import com.afoxplus.products.entities.Product
 import com.google.gson.annotations.SerializedName
 
@@ -10,12 +8,10 @@ internal data class ProductResponse(
     @SerializedName("name") val name: String,
     @SerializedName("description") var description: String,
     @SerializedName("imageUrl") val imageUrl: String,
-    @SerializedName("measureCode") val measureCode: String,
-    @SerializedName("measureValue") val measureValue: String,
-    @SerializedName("currencyCode") val currencyCode: String,
-    @SerializedName("currencyValue") val currencyValue: String,
     @SerializedName("stock") val stock: Int,
     @SerializedName("price") var price: Double,
+    @SerializedName("measure") val measure: MeasureResponse,
+    @SerializedName("currency") val currency: CurrencyResponse,
     @SerializedName("saleStrategy") var strategy: ProductSaleStrategyResponse,
     @SerializedName("productType") val productType: ProductTypeResponse? = null
 ) {
@@ -25,8 +21,8 @@ internal data class ProductResponse(
             name = productResponse.name,
             description = productResponse.description,
             imageUrl = productResponse.imageUrl,
-            measure = Measure(productResponse.measureCode, productResponse.measureValue),
-            currency = Currency(productResponse.currencyCode, productResponse.currencyValue),
+            measure = MeasureResponse.mapToMeasure(productResponse.measure),
+            currency = CurrencyResponse.mapToCurrency(productResponse.currency),
             price = productResponse.price,
             stock = productResponse.stock,
             productType = productResponse.productType?.let { type ->

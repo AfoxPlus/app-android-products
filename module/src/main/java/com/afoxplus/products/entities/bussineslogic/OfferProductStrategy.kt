@@ -7,5 +7,4 @@ interface OfferProductStrategy : SaleProductStrategy {
     }
 
     var percentDiscount: Double
-    var marketName: String
 }

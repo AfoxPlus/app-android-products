@@ -40,7 +40,7 @@ internal class ProductViewModel @Inject constructor(
     fun fetchProductSales() = viewModelScope.launch(Dispatchers.IO) {
         try {
             //TODO: Create use case for get product sales
-            val result = findProductsUseCase("pizza")
+            val result = findProductsUseCase("")
             mProductsSale.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_SALE,
@@ -55,7 +55,7 @@ internal class ProductViewModel @Inject constructor(
     fun fetchProductOffers() = viewModelScope.launch(Dispatchers.IO) {
         try {
             //TODO: Create use case for get product offers
-            val result = findProductsUseCase("pizza")
+            val result = findProductsUseCase("")
             mProductOffer.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_OFFER,
@@ -70,7 +70,7 @@ internal class ProductViewModel @Inject constructor(
     fun fetchProductsAppetizer() = viewModelScope.launch(Dispatchers.IO) {
         try {
             //TODO: Create use case for get recommended products
-            val result = findProductsUseCase("pizza")
+            val result = findProductsUseCase("")
             mProductAppetizer.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER,
@@ -85,7 +85,7 @@ internal class ProductViewModel @Inject constructor(
     fun fetchProductsMenu() = viewModelScope.launch(Dispatchers.IO) {
         try {
             //TODO: Create use case for get product Menu
-            val result = findProductsUseCase("pizza")
+            val result = findProductsUseCase("")
             mProductsMenu.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_MENU,
@@ -100,7 +100,7 @@ internal class ProductViewModel @Inject constructor(
     fun fetchProductsHomeOffer() = viewModelScope.launch(Dispatchers.IO) {
         try {
             //TODO: Create use case for get fetchProductsHomeOffer
-            val result = findProductsUseCase("pizza")
+            val result = findProductsUseCase("")
             mProductsHomeOffer.postValue(result.map { item ->
                 ProductUIModel(
                     ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER,
