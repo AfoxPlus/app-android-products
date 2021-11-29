@@ -13,6 +13,7 @@ internal interface ProductApiNetwork {
         const val PATH_PRODUCT = "product"
         const val PATH_STOCK = "stock"
         const val PATH_STRATEGY = "strategy"
+        const val PATH_SEARCH = "search"
     }
 
     @POST("$PATH_PRODUCT/filter")
@@ -21,22 +22,22 @@ internal interface ProductApiNetwork {
         @Body query: ProductQueryRequest
     ): Response<BaseResponse<List<ProductResponse>>>
 
-    @GET("$PATH_PRODUCT/sale_offers")
+    @GET("$PATH_PRODUCT/sale_offer")
     suspend fun fetchSaleOffers(@HeaderMap headers: Map<String, String>): Response<BaseResponse<List<ProductResponse>>>
 
-    @GET("$PATH_PRODUCT/home_offers")
+    @GET("$PATH_PRODUCT/home_offer")
     suspend fun fetchHomeOffers(): Response<BaseResponse<List<ProductResponse>>>
 
-    @GET("$PATH_PRODUCT/appetizers")
+    @GET("$PATH_PRODUCT/appetizer")
     suspend fun fetchAppetizers(@HeaderMap headers: Map<String, String>): Response<BaseResponse<List<ProductResponse>>>
 
     @GET("$PATH_PRODUCT/menu")
     suspend fun fetchMenu(@HeaderMap headers: Map<String, String>): Response<BaseResponse<List<ProductResponse>>>
 
-    @GET("$PATH_PRODUCT/search/{code}")
+    @GET("$PATH_PRODUCT/$PATH_SEARCH/{code}")
     suspend fun find(@Path("code") code: String): Response<BaseResponse<ProductResponse>>
 
-    @GET("$PATH_PRODUCT/search/{code}/{measure}")
+    @GET("$PATH_PRODUCT/$PATH_SEARCH/{code}/{measure}")
     suspend fun find(
         @Path("code") code: String,
         @Path("measure") measure: String

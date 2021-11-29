@@ -63,7 +63,7 @@ internal class ProductViewModel @Inject constructor(
                     ProductUIModel.VIEW_TYPE_PRODUCT_OFFER,
                     item
                 )
-            }.subList(0, 2))
+            })
         } catch (ex: Exception) {
             Log.d("PRODUCT", "$ex")
         }
@@ -77,7 +77,7 @@ internal class ProductViewModel @Inject constructor(
                     ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER,
                     item
                 )
-            }.subList(3, 5))
+            })
         } catch (ex: Exception) {
             Log.d("PRODUCT", "$ex")
         }
@@ -105,7 +105,7 @@ internal class ProductViewModel @Inject constructor(
                     ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER,
                     item
                 )
-            }.subList(3, 6))
+            })
         } catch (ex: Exception) {
             Log.d("PRODUCT", "$ex")
         }
