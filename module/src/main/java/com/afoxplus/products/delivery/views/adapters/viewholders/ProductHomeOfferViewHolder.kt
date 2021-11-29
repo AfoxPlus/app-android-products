@@ -18,7 +18,7 @@ internal class ProductHomeOfferViewHolder private constructor(
         super.bind(productUIModel)
         productHomeOfferBinding.product = productUIModel.product
         productUIModel.product.getOfferProductStrategy().let { offerProductStrategy ->
-            productHomeOfferBinding.marketNameHomeOffer.text = offerProductStrategy?.marketName
+            productHomeOfferBinding.marketNameHomeOffer.text = offerProductStrategy?.restaurantName
         }
         Glide.with(context).load(productUIModel.product.imageUrl)
             .into(productHomeOfferBinding.imageHomeOffer)

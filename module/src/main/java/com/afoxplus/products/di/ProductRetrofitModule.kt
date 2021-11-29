@@ -24,7 +24,7 @@ class ProductRetrofitModule {
 
     @ProductBaseURL
     @Provides
-    fun provideBaseUrl(): String = "https://w2p9wfkkpd.execute-api.us-east-1.amazonaws.com/prod/"
+    fun provideBaseUrl(): String = "https://8ly21gpvcj.execute-api.us-east-1.amazonaws.com/dev/"
 
     @ProductInterceptor
     @Provides
