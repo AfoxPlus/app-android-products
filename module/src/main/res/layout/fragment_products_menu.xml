@@ -25,7 +25,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/titleAppetizer"
-                style="@style/Title_10"
+                style="@style/Paragraph_03"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -40,7 +40,9 @@
                 android:id="@+id/recyclerProductAppetizer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
                 android:layout_marginBottom="16dp"
                 android:adapter="@{productAppetizerAdapter}"
                 android:orientation="horizontal"
@@ -53,7 +55,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/titleMenu"
-                style="@style/Title_10"
+                style="@style/Paragraph_03"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

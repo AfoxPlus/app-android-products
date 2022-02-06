@@ -57,7 +57,7 @@ class DiscountByOfferTest {
     }
 
     @Test
-    fun `should throw error when percent iis greater than LIMIT_PERCENT_DISCOUNT`() {
+    fun `should throw error when percent is greater than LIMIT_PERCENT_DISCOUNT`() {
         discountByOffer.percentDiscount = 0.81
         val ex: Exception = assertThrows(Exception::class.java) { product.getPriceForSale() }
         assertThat(ex).hasMessageThat().contains("Wrong percentage")

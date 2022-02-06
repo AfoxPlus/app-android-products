@@ -3,6 +3,7 @@ apply(plugin = "maven-publish")
 version = generateVersion(ConfigureApp.version)
 
 fun generateVersion(version: String): String {
+    return version
     val branchName = getBranchName()
     val isDevelopBranch = "develop" == branchName
     if (isDevelopBranch) {

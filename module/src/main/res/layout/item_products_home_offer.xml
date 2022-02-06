@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:onClick="@{() -> onClickItemRecommendedProduct.invoke(product)}"
-        app:cardBackgroundColor="#FFC8BD"
+        app:cardBackgroundColor="@color/orange_03"
         app:cardCornerRadius="13dp"
         app:cardElevation="0dp">
 
@@ -56,13 +56,13 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/priceHomeOffer"
-                style="@style/Title_08"
+                style="@style/Number_18"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-
                 android:gravity="center"
                 android:text="@{product.priceForSaleWithFormat}"
+                android:textColor="@color/orange_02"
                 app:layout_constraintEnd_toStartOf="@+id/originalPriceHomeOffer"
                 app:layout_constraintStart_toEndOf="@+id/imageHomeOffer"
                 app:layout_constraintTop_toBottomOf="@+id/titleHomeOffer"
@@ -70,13 +70,15 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/originalPriceHomeOffer"
-                style="@style/Title_08"
+                style="@style/Number_18"
                 android:layout_width="0dp"
+
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/uikit_regular"
                 android:gravity="center"
                 android:text="@{product.originalPriceWithFormat}"
+                android:textColor="@color/light_01"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/priceHomeOffer"
                 app:layout_constraintTop_toBottomOf="@+id/titleHomeOffer"
@@ -87,7 +89,7 @@
                 android:layout_height="2dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@color/dark_03"
+                android:background="@color/light_01"
                 app:layout_constraintBottom_toBottomOf="@+id/originalPriceHomeOffer"
                 app:layout_constraintEnd_toEndOf="@+id/originalPriceHomeOffer"
                 app:layout_constraintStart_toStartOf="@+id/originalPriceHomeOffer"
