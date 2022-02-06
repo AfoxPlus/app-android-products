@@ -26,7 +26,8 @@
         android:onClick="@{() -> onClickItemRecommendedProduct.invoke(product)}"
         app:cardBackgroundColor="@color/light_01"
         app:cardCornerRadius="12dp"
-        app:cardElevation="2dp">
+        app:cardElevation="2dp"
+        app:rippleColor="@color/light_04">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -73,7 +74,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/productMenuPrice"
-                style="@style/Title_08"
+                style="@style/Number_18"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_margin="12dp"

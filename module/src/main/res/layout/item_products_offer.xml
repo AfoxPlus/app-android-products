@@ -15,11 +15,12 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> onClickProductOffer.invoke(product)}"
         app:cardBackgroundColor="@android:color/transparent"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        app:rippleColor="@android:color/transparent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,6 +34,7 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="6dp"
+                android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -68,24 +70,24 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/priceOffer"
-                style="@style/Title_05"
+                style="@style/Number_18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{product.priceForSaleWithFormat}"
+                android:textColor="@color/orange_02"
                 app:layout_constraintBottom_toBottomOf="@+id/imageOffer"
                 app:layout_constraintStart_toStartOf="@+id/descriptionOffer"
                 tools:text="S/ 50.50" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/originalPrice"
-                style="@style/Title_09"
+                style="@style/Number_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@{product.originalPriceWithFormat}"
-                android:textColor="@color/dark_04"
+                android:textColor="@color/dark_05"
                 app:layout_constraintBottom_toBottomOf="@+id/priceOffer"
-                app:layout_constraintEnd_toEndOf="@+id/titleOffer"
                 app:layout_constraintStart_toEndOf="@+id/priceOffer"
                 app:layout_constraintTop_toTopOf="@+id/priceOffer"
                 tools:text="S/ 62.20" />
