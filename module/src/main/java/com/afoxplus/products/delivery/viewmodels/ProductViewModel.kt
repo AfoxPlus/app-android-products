@@ -1,6 +1,5 @@
 package com.afoxplus.products.delivery.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +10,11 @@ import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.products.entities.Product
 import com.afoxplus.products.usecases.actions.*
 import com.afoxplus.uikit.bus.EventBusListener
+import com.afoxplus.uikit.di.UIKitIODispatcher
+import com.afoxplus.uikit.di.UIKitMainDispatcher
+import com.afoxplus.uikit.views.status.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,99 +25,111 @@ internal class ProductViewModel @Inject constructor(
     private val fetchSaleOffer: FetchSaleOffer,
     private val fetchAppetizer: FetchAppetizer,
     private val fetchMenu: FetchMenu,
-    private val productEventBus: EventBusListener
+    private val productEventBus: EventBusListener,
+    @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher,
+    @UIKitIODispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val mProductsSale: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
-    val productsSale: LiveData<List<ProductUIModel>> get() = mProductsSale
+    private val mProductsSale: MutableLiveData<ListState<ProductUIModel>> by lazy { MutableLiveData<ListState<ProductUIModel>>() }
+    private val mProductOffer: MutableLiveData<ListState<ProductUIModel>> by lazy { MutableLiveData<ListState<ProductUIModel>>() }
+    private val mProductAppetizer: MutableLiveData<ListState<ProductUIModel>> by lazy { MutableLiveData<ListState<ProductUIModel>>() }
+    private val mProductsMenu: MutableLiveData<ListState<ProductUIModel>> by lazy { MutableLiveData<ListState<ProductUIModel>>() }
+    private val mProductsHomeOffer: MutableLiveData<ListState<ProductUIModel>> by lazy { MutableLiveData<ListState<ProductUIModel>>() }
 
-    private val mProductOffer: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
-    val productOffer: LiveData<List<ProductUIModel>> get() = mProductOffer
+    val productsSale: LiveData<ListState<ProductUIModel>> get() = mProductsSale
+    val productOffer: LiveData<ListState<ProductUIModel>> get() = mProductOffer
+    val productAppetizer: LiveData<ListState<ProductUIModel>> get() = mProductAppetizer
+    val productMenu: LiveData<ListState<ProductUIModel>> get() = mProductsMenu
+    val productsHomeOffer: LiveData<ListState<ProductUIModel>> get() = mProductsHomeOffer
 
-    private val mProductAppetizer: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
-    val productAppetizer: LiveData<List<ProductUIModel>> get() = mProductAppetizer
-
-    private val mProductsMenu: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
-    val productMenu: LiveData<List<ProductUIModel>> get() = mProductsMenu
-
-    private val mProductsHomeOffer: MutableLiveData<List<ProductUIModel>> by lazy { MutableLiveData<List<ProductUIModel>>() }
-    val productsHomeOffer: LiveData<List<ProductUIModel>> get() = mProductsHomeOffer
-
-    fun fetchProductSales() = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchProductSales() = viewModelScope.launch(ioDispatcher) {
         try {
-            val result = fetchProducts("")
-            mProductsSale.postValue(result.map { item ->
-                ProductUIModel(
-                    ProductUIModel.VIEW_TYPE_PRODUCT_SALE,
-                    item
-                )
-            })
+            mProductsSale.postValue(ListLoading())
+            val result = fetchProducts("").map { item ->
+                ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_SALE, item)
+            }
+            if (result.isEmpty())
+                mProductsSale.postValue(ListEmptyData())
+            else
+                mProductsSale.postValue(ListSuccess<ProductUIModel>(result))
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "$ex")
+            mProductsSale.postValue(ListError(ex))
         }
     }
 
-    fun fetchProductOffers() = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchProductOffers() = viewModelScope.launch(ioDispatcher) {
         try {
-            val result = fetchSaleOffer()
-            mProductOffer.postValue(result.map { item ->
-                ProductUIModel(
-                    ProductUIModel.VIEW_TYPE_PRODUCT_OFFER,
-                    item
-                )
-            })
+            val data = fetchSaleOffer().map { item ->
+                ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_OFFER, item)
+            }
+            if (data.isEmpty())
+                mProductOffer.postValue(ListEmptyData())
+            else
+                mProductOffer.postValue(ListSuccess(data))
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "$ex")
+            mProductOffer.postValue(ListError(ex))
         }
     }
 
-    fun fetchProductsAppetizer() = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchProductsAppetizer() = viewModelScope.launch(ioDispatcher) {
         try {
+            mProductAppetizer.postValue(ListLoading())
             val result = fetchAppetizer()
-            mProductAppetizer.postValue(result.map { item ->
-                ProductUIModel(
-                    ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER,
-                    item
-                )
-            })
+            if (result.isEmpty())
+                mProductAppetizer.postValue(ListEmptyData())
+            else {
+                val mapResult = result.map { item ->
+                    ProductUIModel(
+                        ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER,
+                        item
+                    )
+                }
+                mProductAppetizer.postValue(ListSuccess(mapResult))
+            }
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "$ex")
+            mProductAppetizer.postValue(ListError(ex))
         }
     }
 
-    fun fetchProductsMenu() = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchProductsMenu() = viewModelScope.launch(ioDispatcher) {
         try {
+            mProductsMenu.postValue(ListLoading())
             val result = fetchMenu()
-            mProductsMenu.postValue(result.map { item ->
-                ProductUIModel(
-                    ProductUIModel.VIEW_TYPE_PRODUCT_MENU,
-                    item
-                )
-            })
+            if (result.isEmpty())
+                mProductsMenu.postValue(ListEmptyData())
+            else {
+                val mapResult = result.map { item ->
+                    ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_MENU, item)
+                }
+                mProductsMenu.postValue(ListSuccess(mapResult))
+            }
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "$ex")
+            mProductsMenu.postValue(ListError(ex))
         }
     }
 
-    fun fetchProductsHomeOffer() = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchProductsHomeOffer() = viewModelScope.launch(ioDispatcher) {
         try {
+            mProductsHomeOffer.postValue(ListLoading())
             val result = fetchHomeOffer()
-            mProductsHomeOffer.postValue(result.map { item ->
-                ProductUIModel(
-                    ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER,
-                    item
-                )
-            })
+            if(result.isEmpty())
+                mProductsHomeOffer.postValue(ListEmptyData())
+            else {
+                val mapResult = result.map { item ->
+                    ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER, item)
+                }
+                mProductsHomeOffer.postValue(ListSuccess(mapResult))
+            }
         } catch (ex: Exception) {
-            Log.d("PRODUCT", "$ex")
+            mProductsHomeOffer.postValue(ListError(ex))
         }
     }
 
-    fun onClickProductEvent(product: Product) = viewModelScope.launch(Dispatchers.Main) {
+    fun onClickProductEvent(product: Product) = viewModelScope.launch(mainDispatcher) {
         productEventBus.send(OnClickProductSaleEvent.build(product))
     }
 
-    fun onClickProductOfferEvent(product: Product) = viewModelScope.launch(Dispatchers.Main) {
+    fun onClickProductOfferEvent(product: Product) = viewModelScope.launch(mainDispatcher) {
         productEventBus.send(OnClickProductOfferEvent.build(product))
     }
 }

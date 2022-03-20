@@ -3,12 +3,18 @@ package com.afoxplus.products.delivery.views.fragments
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.afoxplus.products.databinding.FragmentProductsMenuBinding
 import com.afoxplus.products.delivery.viewmodels.ProductViewModel
 import com.afoxplus.products.delivery.views.adapters.ProductAdapter
 import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.extensions.setGone
 import com.afoxplus.uikit.fragments.BaseFragment
+import com.afoxplus.uikit.views.status.ListEmptyData
+import com.afoxplus.uikit.views.status.ListError
+import com.afoxplus.uikit.views.status.ListLoading
+import com.afoxplus.uikit.views.status.ListSuccess
 
 internal class ProductMenuFragment : BaseFragment() {
     private lateinit var fragmentMenuBinding: FragmentProductsMenuBinding
@@ -30,15 +36,37 @@ internal class ProductMenuFragment : BaseFragment() {
     }
 
     override fun observerViewModel() {
-        productViewModel.productMenu.observe(viewLifecycleOwner) { products ->
-            productMenuAdapter.submitList(products)
+        productViewModel.productMenu.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is ListSuccess -> productMenuAdapter.submitList(state.data)
+                is ListEmptyData -> {
+                    fragmentMenuBinding.titleMenu.setGone()
+                    fragmentMenuBinding.recyclerProductMenu.setGone()
+                }
+                is ListLoading -> showToast("Loading...")
+                is ListError -> showToast("Internal Error")
+            }
         }
-        productViewModel.productAppetizer.observe(viewLifecycleOwner) { products ->
-            productAppetizerAdapter.submitList(products)
+
+        productViewModel.productAppetizer.observe(viewLifecycleOwner) { state ->
+
+            when (state) {
+                is ListSuccess -> productAppetizerAdapter.submitList(state.data)
+                is ListEmptyData -> {
+                    fragmentMenuBinding.titleAppetizer.setGone()
+                    fragmentMenuBinding.recyclerProductAppetizer.setGone()
+                }
+                is ListLoading -> showToast("Loading...")
+                is ListError -> showToast("Internal Error")
+            }
         }
     }
 
     private fun onClickProductMenuEvent(product: Product) {
         productViewModel.onClickProductEvent(product)
+    }
+
+    private fun showToast(msg: String, duration: Int = Toast.LENGTH_SHORT) {
+        Toast.makeText(requireContext(), msg, duration).show()
     }
 }

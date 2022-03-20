@@ -3,14 +3,20 @@ package com.afoxplus.products.delivery.views.fragments
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afoxplus.products.databinding.FragmentProductsSaleBinding
+import com.afoxplus.products.delivery.models.ProductUIModel
 import com.afoxplus.products.delivery.viewmodels.ProductViewModel
 import com.afoxplus.products.delivery.views.adapters.ProductAdapter
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.fragments.BaseFragment
+import com.afoxplus.uikit.views.status.ListEmptyData
+import com.afoxplus.uikit.views.status.ListError
+import com.afoxplus.uikit.views.status.ListLoading
+import com.afoxplus.uikit.views.status.ListSuccess
 
 internal class ProductSaleFragment : BaseFragment() {
 
@@ -35,12 +41,33 @@ internal class ProductSaleFragment : BaseFragment() {
     }
 
     override fun observerViewModel() {
-        productViewModel.productsSale.observe(viewLifecycleOwner) { products ->
-            productSaleAdapter.submitList(products)
+        productViewModel.productsSale.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is ListSuccess ->
+                    productSaleAdapter.submitList(state.data)
+                is ListLoading -> showToast("Loading...")
+                is ListError -> showToast("Internal Error")
+                is ListEmptyData -> showToast("Empty Data")
+            }
         }
-        productViewModel.productOffer.observe(viewLifecycleOwner) { products ->
-            productOfferAdapter.submitList(products)
+
+        productViewModel.productOffer.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is ListSuccess -> setDataProductOfferAdapter(state.data)
+                is ListEmptyData -> binding.offerContent.visibility = View.GONE
+                is ListLoading -> showToast("Loading...")
+                is ListError -> showToast("Internal Error")
+            }
         }
+    }
+
+    private fun showToast(msg: String, duration: Int = Toast.LENGTH_SHORT) {
+        Toast.makeText(requireContext(), msg, duration).show()
+    }
+
+    private fun setDataProductOfferAdapter(data: List<ProductUIModel>) {
+        binding.offerContent.visibility = View.VISIBLE
+        productOfferAdapter.submitList(data)
     }
 
     private fun onClickProductEvent(product: Product) {
