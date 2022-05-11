@@ -17,8 +17,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:onClick="@{() -> onClickProductOffer.invoke(product)}"
-        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
         app:rippleColor="@android:color/transparent">
 
@@ -26,14 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageOffer"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +39,11 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/titleOffer"
-                style="@style/Title_09"
+                style="@style/Title_10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="12dp"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -70,11 +68,13 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/priceOffer"
-                style="@style/Number_18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="@{product.priceForSaleWithFormat}"
                 android:textColor="@color/orange_02"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageOffer"
                 app:layout_constraintStart_toStartOf="@+id/descriptionOffer"
                 tools:text="S/ 50.50" />
@@ -85,10 +85,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="20dp"
                 android:text="@{product.originalPriceWithFormat}"
-                android:textColor="@color/dark_05"
+                android:textColor="@color/dark_01"
                 app:layout_constraintBottom_toBottomOf="@+id/priceOffer"
-                app:layout_constraintStart_toEndOf="@+id/priceOffer"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/priceOffer"
                 tools:text="S/ 62.20" />
 
