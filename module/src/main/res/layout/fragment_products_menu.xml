@@ -67,19 +67,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerProductAppetizer" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerProductMenu"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="16dp"
-                android:adapter="@{productMenuAdapter}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/titleMenu"
-                tools:listitem="@layout/item_products_menu" />
+                app:layout_constraintTop_toBottomOf="@+id/titleMenu">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerProductMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp"
+                    android:adapter="@{productMenuAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_products_menu" />
+
+                <include
+                    android:id="@+id/layoutEmpty"
+                    layout="@layout/layout_products_empty"
+                    tools:visibility="gone" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
