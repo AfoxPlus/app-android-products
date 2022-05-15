@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.afoxplus.products.delivery.helpres.GetProductsStringsHelper
 import com.afoxplus.products.delivery.models.ProductUIModel
 import com.afoxplus.products.delivery.views.events.OnClickProductOfferEvent
 import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
@@ -26,6 +27,7 @@ internal class ProductViewModel @Inject constructor(
     private val fetchAppetizer: FetchAppetizer,
     private val fetchMenu: FetchMenu,
     private val productEventBus: EventBusListener,
+    private val getProductsStringsHelper: GetProductsStringsHelper,
     @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher,
     @UIKitIODispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
@@ -48,14 +50,15 @@ internal class ProductViewModel @Inject constructor(
             val result = fetchProducts("").map { item ->
                 ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_SALE, item)
             }
-            if (result.isEmpty())
+            if (result.isEmpty()) {
+                val emptyLbsResult = getProductsStringsHelper.getSalesEmptyStringsUIModel()
                 mProductsSale.postValue(
                     EmptyProduct(
-                        "¡Los sentimos!",
-                        "No contamos con platos a la carta por el momento"
+                        emptyLbsResult.lblTitle,
+                        emptyLbsResult.lblDescription
                     )
                 )
-            else
+            } else
                 mProductsSale.postValue(ListSuccess(result))
         } catch (ex: Exception) {
             mProductsSale.postValue(ListError(ex))
@@ -100,14 +103,15 @@ internal class ProductViewModel @Inject constructor(
         try {
             mProductsMenu.postValue(ListLoading())
             val result = fetchMenu()
-            if (result.isEmpty())
+            if (result.isEmpty()) {
+                val emptyLbsResult = getProductsStringsHelper.getMenuEmptyStringsUIModel()
                 mProductsMenu.postValue(
                     EmptyProduct(
-                        "¡Los sentimos!",
-                        "No contamos con menu por el momento"
+                        emptyLbsResult.lblTitle,
+                        emptyLbsResult.lblDescription
                     )
                 )
-            else {
+            } else {
                 val mapResult = result.map { item ->
                     ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_MENU, item)
                 }
