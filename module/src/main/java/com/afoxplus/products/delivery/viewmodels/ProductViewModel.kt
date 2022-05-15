@@ -49,9 +49,14 @@ internal class ProductViewModel @Inject constructor(
                 ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_SALE, item)
             }
             if (result.isEmpty())
-                mProductsSale.postValue(ListEmptyData())
+                mProductsSale.postValue(
+                    EmptyProduct(
+                        "¡Los sentimos!",
+                        "No contamos con platos a la carta por el momento"
+                    )
+                )
             else
-                mProductsSale.postValue(ListSuccess<ProductUIModel>(result))
+                mProductsSale.postValue(ListSuccess(result))
         } catch (ex: Exception) {
             mProductsSale.postValue(ListError(ex))
         }
@@ -96,7 +101,12 @@ internal class ProductViewModel @Inject constructor(
             mProductsMenu.postValue(ListLoading())
             val result = fetchMenu()
             if (result.isEmpty())
-                mProductsMenu.postValue(ListEmptyData())
+                mProductsMenu.postValue(
+                    EmptyProduct(
+                        "¡Los sentimos!",
+                        "No contamos con menu por el momento"
+                    )
+                )
             else {
                 val mapResult = result.map { item ->
                     ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_MENU, item)
@@ -112,7 +122,7 @@ internal class ProductViewModel @Inject constructor(
         try {
             mProductsHomeOffer.postValue(ListLoading())
             val result = fetchHomeOffer()
-            if(result.isEmpty())
+            if (result.isEmpty())
                 mProductsHomeOffer.postValue(ListEmptyData())
             else {
                 val mapResult = result.map { item ->
@@ -132,4 +142,6 @@ internal class ProductViewModel @Inject constructor(
     fun onClickProductOfferEvent(product: Product) = viewModelScope.launch(mainDispatcher) {
         productEventBus.send(OnClickProductOfferEvent.build(product))
     }
+
+    data class EmptyProduct<E>(val title: String, val description: String) : ListState<E>
 }

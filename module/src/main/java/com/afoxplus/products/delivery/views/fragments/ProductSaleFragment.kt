@@ -12,6 +12,8 @@ import com.afoxplus.products.delivery.models.ProductUIModel
 import com.afoxplus.products.delivery.viewmodels.ProductViewModel
 import com.afoxplus.products.delivery.views.adapters.ProductAdapter
 import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.extensions.setGone
+import com.afoxplus.uikit.extensions.setVisible
 import com.afoxplus.uikit.fragments.BaseFragment
 import com.afoxplus.uikit.views.status.ListEmptyData
 import com.afoxplus.uikit.views.status.ListError
@@ -32,6 +34,7 @@ internal class ProductSaleFragment : BaseFragment() {
     }
 
     override fun setUpView() {
+        binding.layoutEmpty.container.setGone()
         setupRecyclerOffer()
         setupRecyclerProduct()
         productSaleAdapter.setOnClickProductListener(::onClickProductEvent)
@@ -47,7 +50,10 @@ internal class ProductSaleFragment : BaseFragment() {
                     productSaleAdapter.submitList(state.data)
                 is ListLoading -> showToast("Loading...")
                 is ListError -> showToast("Internal Error")
-                is ListEmptyData -> showToast("Empty Data")
+                is ProductViewModel.EmptyProduct -> handleEmptyProductSale(
+                    state.title,
+                    state.description
+                )
             }
         }
 
@@ -59,6 +65,13 @@ internal class ProductSaleFragment : BaseFragment() {
                 is ListError -> showToast("Internal Error")
             }
         }
+    }
+
+    private fun handleEmptyProductSale(title: String, description: String) {
+        binding.offerContent.setGone()
+        binding.layoutEmpty.lblTitle.text = title
+        binding.layoutEmpty.lblDescription.text = description
+        binding.layoutEmpty.container.setVisible()
     }
 
     private fun showToast(msg: String, duration: Int = Toast.LENGTH_SHORT) {

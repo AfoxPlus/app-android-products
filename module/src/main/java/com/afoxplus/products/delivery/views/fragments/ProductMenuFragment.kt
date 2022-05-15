@@ -10,6 +10,7 @@ import com.afoxplus.products.delivery.viewmodels.ProductViewModel
 import com.afoxplus.products.delivery.views.adapters.ProductAdapter
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.extensions.setGone
+import com.afoxplus.uikit.extensions.setVisible
 import com.afoxplus.uikit.fragments.BaseFragment
 import com.afoxplus.uikit.views.status.ListEmptyData
 import com.afoxplus.uikit.views.status.ListError
@@ -28,6 +29,7 @@ internal class ProductMenuFragment : BaseFragment() {
     }
 
     override fun setUpView() {
+        fragmentMenuBinding.layoutEmpty.container.setGone()
         fragmentMenuBinding.productMenuAdapter = productMenuAdapter
         fragmentMenuBinding.productAppetizerAdapter = productAppetizerAdapter
         productMenuAdapter.setOnClickProductListener(::onClickProductMenuEvent)
@@ -39,10 +41,10 @@ internal class ProductMenuFragment : BaseFragment() {
         productViewModel.productMenu.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is ListSuccess -> productMenuAdapter.submitList(state.data)
-                is ListEmptyData -> {
-                    fragmentMenuBinding.titleMenu.setGone()
-                    fragmentMenuBinding.recyclerProductMenu.setGone()
-                }
+                is ProductViewModel.EmptyProduct -> handleEmptyProductMenu(
+                    state.title,
+                    state.description
+                )
                 is ListLoading -> showToast("Loading...")
                 is ListError -> showToast("Internal Error")
             }
@@ -60,6 +62,15 @@ internal class ProductMenuFragment : BaseFragment() {
                 is ListError -> showToast("Internal Error")
             }
         }
+    }
+
+
+    private fun handleEmptyProductMenu(title: String, description: String) {
+        fragmentMenuBinding.titleMenu.setGone()
+        fragmentMenuBinding.recyclerProductMenu.setGone()
+        fragmentMenuBinding.layoutEmpty.lblDescription.text = description
+        fragmentMenuBinding.layoutEmpty.lblTitle.text = title
+        fragmentMenuBinding.layoutEmpty.container.setVisible()
     }
 
     private fun onClickProductMenuEvent(product: Product) {
