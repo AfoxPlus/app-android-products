@@ -42,8 +42,8 @@ internal class ProductMenuFragment : BaseFragment() {
             when (state) {
                 is ListSuccess -> productMenuAdapter.submitList(state.data)
                 is ProductViewModel.EmptyProduct -> handleEmptyProductMenu(
-                    state.title,
-                    state.description
+                    getString(state.title),
+                    getString(state.description)
                 )
                 is ListLoading -> showToast("Loading...")
                 is ListError -> showToast("Internal Error")

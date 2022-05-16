@@ -51,8 +51,8 @@ internal class ProductSaleFragment : BaseFragment() {
                 is ListLoading -> showToast("Loading...")
                 is ListError -> showToast("Internal Error")
                 is ProductViewModel.EmptyProduct -> handleEmptyProductSale(
-                    state.title,
-                    state.description
+                    getString(state.title),
+                    getString(state.description)
                 )
             }
         }

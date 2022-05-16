@@ -1,5 +1,6 @@
 package com.afoxplus.products.delivery.helpres
 
+import com.afoxplus.products.R
 import com.afoxplus.products.delivery.models.EmptyStringsUIModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,15 +15,15 @@ internal class GetProductsStringsHelperImpl @Inject constructor() :
     GetProductsStringsHelper {
     override fun getSalesEmptyStringsUIModel(): EmptyStringsUIModel {
         return EmptyStringsUIModel(
-            lblTitle = "¡Los sentimos!",
-            lblDescription = "No contamos con platos a la carta por el momento"
+            lblTitle = R.string.products_empty_title,
+            lblDescription = R.string.products_empty_sales_description
         )
     }
 
     override fun getMenuEmptyStringsUIModel(): EmptyStringsUIModel {
         return EmptyStringsUIModel(
-            lblTitle = "¡Los sentimos!",
-            lblDescription = "No contamos con menu por el momento"
+            lblTitle = R.string.products_empty_title,
+            lblDescription = R.string.products_empty_menu_description
         )
     }
 

@@ -1,3 +1,3 @@
 package com.afoxplus.products.delivery.models
 
-internal data class EmptyStringsUIModel(val lblTitle: String, val lblDescription: String)
+internal data class EmptyStringsUIModel(val lblTitle: Int, val lblDescription: Int)
