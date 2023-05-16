@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.afoxplus.products.delivery.extensions.toEmptyProduct
+import com.afoxplus.products.delivery.helpres.GetProductsStringsHelper
 import com.afoxplus.products.delivery.models.ProductUIModel
 import com.afoxplus.products.delivery.views.events.OnClickProductOfferEvent
 import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
@@ -26,6 +28,7 @@ internal class ProductViewModel @Inject constructor(
     private val fetchAppetizer: FetchAppetizer,
     private val fetchMenu: FetchMenu,
     private val productEventBus: EventBusListener,
+    private val getProductsStringsHelper: GetProductsStringsHelper,
     @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher,
     @UIKitIODispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
@@ -49,9 +52,11 @@ internal class ProductViewModel @Inject constructor(
                 ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_SALE, item)
             }
             if (result.isEmpty())
-                mProductsSale.postValue(ListEmptyData())
+                getProductsStringsHelper.getSalesEmptyStringsUIModel().let { resource ->
+                    mProductsSale.postValue(resource.toEmptyProduct())
+                }
             else
-                mProductsSale.postValue(ListSuccess<ProductUIModel>(result))
+                mProductsSale.postValue(ListSuccess(result))
         } catch (ex: Exception) {
             mProductsSale.postValue(ListError(ex))
         }
@@ -95,9 +100,11 @@ internal class ProductViewModel @Inject constructor(
         try {
             mProductsMenu.postValue(ListLoading())
             val result = fetchMenu()
-            if (result.isEmpty())
-                mProductsMenu.postValue(ListEmptyData())
-            else {
+            if (result.isEmpty()) {
+                getProductsStringsHelper.getMenuEmptyStringsUIModel().let { resource ->
+                    mProductsMenu.postValue(resource.toEmptyProduct())
+                }
+            } else {
                 val mapResult = result.map { item ->
                     ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_MENU, item)
                 }
@@ -112,7 +119,7 @@ internal class ProductViewModel @Inject constructor(
         try {
             mProductsHomeOffer.postValue(ListLoading())
             val result = fetchHomeOffer()
-            if(result.isEmpty())
+            if (result.isEmpty())
                 mProductsHomeOffer.postValue(ListEmptyData())
             else {
                 val mapResult = result.map { item ->
@@ -132,4 +139,6 @@ internal class ProductViewModel @Inject constructor(
     fun onClickProductOfferEvent(product: Product) = viewModelScope.launch(mainDispatcher) {
         productEventBus.send(OnClickProductOfferEvent.build(product))
     }
+
+    data class EmptyProduct<T>(val title: Int, val description: Int) : ListState<T>
 }
