@@ -8,5 +8,7 @@ import com.afoxplus.products.entities.Product
  */
 interface SaleProductStrategy : Parcelable {
     var strategyCode: String
+    var restaurantCode: String
+    var restaurantName: String
     fun calculateNewPrice(product: Product): Double
 }

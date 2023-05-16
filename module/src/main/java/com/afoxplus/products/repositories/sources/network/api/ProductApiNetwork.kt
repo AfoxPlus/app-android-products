@@ -1,39 +1,51 @@
 package com.afoxplus.products.repositories.sources.network.api
 
+import com.afoxplus.network.response.BaseResponse
+import com.afoxplus.products.repositories.sources.network.api.request.ProductQueryRequest
 import com.afoxplus.products.repositories.sources.network.api.response.ProductResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductSaleStrategyResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductStockResponse
-import com.afoxplus.uikit.service.annotations.MockService
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 internal interface ProductApiNetwork {
     companion object {
         const val PATH_PRODUCT = "product"
         const val PATH_STOCK = "stock"
         const val PATH_STRATEGY = "strategy"
+        const val PATH_SEARCH = "search"
     }
 
-    @MockService(jsonFileName = "mocks/fetchProduct.json")
-    @GET("$PATH_PRODUCT/{description}")
-    suspend fun fetch(@Path("description") description: String): Response<List<ProductResponse>>
+    @POST("$PATH_PRODUCT/filter")
+    suspend fun fetch(
+        @HeaderMap headers: Map<String, String>,
+        @Body query: ProductQueryRequest
+    ): Response<BaseResponse<List<ProductResponse>>>
 
-    @MockService(jsonFileName = "mocks/findProductByCode.json")
-    @GET("$PATH_PRODUCT/{code}")
-    suspend fun find(@Path("code") code: String): Response<ProductResponse>
+    @GET("$PATH_PRODUCT/sale_offer")
+    suspend fun fetchSaleOffers(@HeaderMap headers: Map<String, String>): Response<BaseResponse<List<ProductResponse>>>
 
-    @GET("$PATH_PRODUCT/{code}/{measure}")
+    @GET("$PATH_PRODUCT/home_offer")
+    suspend fun fetchHomeOffers(): Response<BaseResponse<List<ProductResponse>>>
+
+    @GET("$PATH_PRODUCT/appetizer")
+    suspend fun fetchAppetizers(@HeaderMap headers: Map<String, String>): Response<BaseResponse<List<ProductResponse>>>
+
+    @GET("$PATH_PRODUCT/menu")
+    suspend fun fetchMenu(@HeaderMap headers: Map<String, String>): Response<BaseResponse<List<ProductResponse>>>
+
+    @GET("$PATH_PRODUCT/$PATH_SEARCH/{code}")
+    suspend fun find(@Path("code") code: String): Response<BaseResponse<ProductResponse>>
+
+    @GET("$PATH_PRODUCT/$PATH_SEARCH/{code}/{measure}")
     suspend fun find(
         @Path("code") code: String,
         @Path("measure") measure: String
-    ): Response<ProductResponse>
+    ): Response<BaseResponse<ProductResponse>>
 
-    @MockService(jsonFileName = "mocks/hasStockProduct.json")
     @GET("$PATH_PRODUCT/$PATH_STOCK/{code}")
-    suspend fun hasStock(@Path("code") code: String): Response<ProductStockResponse>
+    suspend fun hasStock(@Path("code") code: String): Response<BaseResponse<ProductStockResponse>>
 
-    @MockService(jsonFileName = "mocks/findSaleStrategy.json")
     @GET("$PATH_PRODUCT/$PATH_STRATEGY/{product_code}")
-    suspend fun findSaleStrategy(@Path("product_code") productCode: String): Response<ProductSaleStrategyResponse>
+    suspend fun findSaleStrategy(@Path("product_code") productCode: String): Response<BaseResponse<ProductSaleStrategyResponse>>
 }

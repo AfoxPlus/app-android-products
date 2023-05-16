@@ -2,12 +2,13 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
+    id("dagger.hilt.android.plugin")
 }
 
+apply(from = "sonarqube.gradle")
 apply(from = "jacoco.gradle")
-apply(from = "distribution.gradle")
+apply(from = "upload.gradle")
 
 android {
     compileSdk = Versions.compileSdkVersion
@@ -27,17 +28,29 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
+
+        getByName("debug") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+        }
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+    kotlinOptions.jvmTarget = "${JavaVersion.VERSION_11}"
+
     buildFeatures {
         viewBinding = true
         dataBinding = true
+    }
+
+    lint {
+        isCheckDependencies = true
     }
 }
 
@@ -48,19 +61,25 @@ dependencies {
     implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
     implementation(Deps.Jetpack.appcompat)
+
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
     implementation(Deps.UI.glide)
     kapt(Deps.UI.glideCompiler)
+    implementation(Deps.UI.uikit)
+
+    api(Deps.Arch.network)
     api(Deps.Arch.retrofit2)
     api(Deps.Arch.gson)
     api(Deps.Arch.loggingInterceptor)
     implementation(Deps.Arch.coroutinesCore)
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
-    implementation("com.afoxplus.android:uikit:1.0.0")
 
     testImplementation(Deps.Test.jUnit)
+    testImplementation(Deps.Test.testCore)
+    testImplementation(Deps.Test.truth)
+    testImplementation(Deps.Test.mockitoKotlin)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onClickProductOffer"
+            type="com.afoxplus.products.delivery.views.adapters.ProductAdapter.OnClickProduct" />
+
+        <variable
+            name="product"
+            type="com.afoxplus.products.entities.Product" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:onClick="@{() -> onClickProductOffer.invoke(product)}"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:rippleColor="@android:color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageOffer"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleOffer"
+                style="@style/Title_10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{product.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageOffer"
+                app:layout_constraintTop_toTopOf="@+id/imageOffer"
+                tools:text="Title product offer" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/descriptionOffer"
+                style="@style/Paragraph_04"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{product.description}"
+                app:layout_constraintEnd_toEndOf="@+id/titleOffer"
+                app:layout_constraintStart_toStartOf="@+id/titleOffer"
+                app:layout_constraintTop_toBottomOf="@+id/titleOffer"
+                tools:text="@tools:sample/lorem" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/priceOffer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@{product.priceForSaleWithFormat}"
+                android:textColor="@color/orange_02"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageOffer"
+                app:layout_constraintStart_toStartOf="@+id/descriptionOffer"
+                tools:text="S/ 50.50" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/originalPrice"
+                style="@style/Number_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="20dp"
+                android:text="@{product.originalPriceWithFormat}"
+                android:textColor="@color/dark_01"
+                app:layout_constraintBottom_toBottomOf="@+id/priceOffer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/priceOffer"
+                tools:text="S/ 62.20" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dark_03"
+                app:layout_constraintBottom_toBottomOf="@+id/originalPrice"
+                app:layout_constraintEnd_toEndOf="@+id/originalPrice"
+                app:layout_constraintStart_toStartOf="@+id/originalPrice"
+                app:layout_constraintTop_toTopOf="@+id/originalPrice" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

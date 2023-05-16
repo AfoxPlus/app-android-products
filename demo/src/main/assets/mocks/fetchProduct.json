@@ -13,8 +13,13 @@
     "saleStrategy": {
       "strategyCode": "SASD",
       "parameters": {
-        "percentage": 0.25
+        "percentage": 0.25,
+        "marketName": "Rest. Doña Esther"
       }
+    },
+    "productType": {
+      "code": "PGEN",
+      "name": "Generic"
     }
   },
   {
@@ -31,8 +36,13 @@
     "saleStrategy": {
       "strategyCode": "SASD",
       "parameters": {
-        "percentage": 0.20
+        "percentage": 0.20,
+        "marketName": "Rest. Doña Esther"
       }
+    },
+    "productType": {
+      "code": "PGEN",
+      "name": "Generic"
     }
   },
   {
@@ -49,8 +59,13 @@
     "saleStrategy": {
       "strategyCode": "SASD",
       "parameters": {
-        "percentage": 0.19
+        "percentage": 0.19,
+        "marketName": "Rest. Doña Esther"
       }
+    },
+    "productType": {
+      "code": "PGEN",
+      "name": "Generic"
     }
   },
   {
@@ -66,8 +81,13 @@
     "saleStrategy": {
       "strategyCode": "SASD",
       "parameters": {
-        "percentage": 0.18
+        "percentage": 0.18,
+        "marketName": "Rest. Doña Esther"
       }
+    },
+    "productType": {
+      "code": "PGEN",
+      "name": "Generic"
     }
   },
   {
@@ -84,8 +104,13 @@
     "saleStrategy": {
       "strategyCode": "SASD",
       "parameters": {
-        "percentage": 0.30
+        "percentage": 0.30,
+        "marketName": "Rest. Doña Esther"
       }
+    },
+    "productType": {
+      "code": "PGEN",
+      "name": "Generic"
     }
   },
   {
@@ -101,8 +126,13 @@
     "saleStrategy": {
       "strategyCode": "SASD",
       "parameters": {
-        "percentage": 0.18
+        "percentage": 0.18,
+        "marketName": "Rest. Doña Esther"
       }
+    },
+    "productType": {
+      "code": "PGEN",
+      "name": "Generic"
     }
   },
   {
@@ -119,8 +149,13 @@
     "saleStrategy": {
       "strategyCode": "SASD",
       "parameters": {
-        "percentage": 0.30
+        "percentage": 0.30,
+        "marketName": "Rest. Doña Esther"
       }
+    },
+    "productType": {
+      "code": "PGEN",
+      "name": "Generic"
     }
   }
 ]

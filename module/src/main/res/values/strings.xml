@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="products_appetizer_title">Entradas</string>
+    <string name="products_menu_title">Segundos</string>
+    <string name="products_title_offer_day">Ofertas del día</string>
+    <string name="products_empty_title">"¡Los sentimos!"</string>
+    <string name="products_empty_sales_description">"No contamos con platos a la carta por el momento"</string>
+    <string name="products_empty_menu_description">"No contamos con menu por el momento"</string>
+</resources>

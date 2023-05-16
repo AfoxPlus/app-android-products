@@ -9,7 +9,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 internal class DiscountByOffer(
     override var strategyCode: String,
-    override var percentDiscount: Double
+    override var percentDiscount: Double,
+    override var restaurantCode: String,
+    override var restaurantName: String
 ) : OfferProductStrategy {
     override fun calculateNewPrice(product: Product): Double {
         return if (percentDiscount > MINIMUM_PERCENT_DISCOUNT && percentDiscount <= LIMIT_PERCENT_DISCOUNT)

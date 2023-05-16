@@ -2,9 +2,9 @@ package com.afoxplus.products.di
 
 import android.content.Context
 import android.os.Build
+import com.afoxplus.network.annotations.MockService
+import com.afoxplus.network.interceptors.BaseInterceptor
 import com.afoxplus.uikit.extensions.convertToString
-import com.afoxplus.uikit.service.BaseInterceptor
-import com.afoxplus.uikit.service.annotations.MockService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,11 +18,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-
 @Module
 @InstallIn(SingletonComponent::class)
-internal object ProductRetrofitModule {
-    
+class ProductRetrofitModule {
+
+    @ProductBaseURL
+    @Provides
+    fun provideBaseUrl(): String = "https://8ly21gpvcj.execute-api.us-east-1.amazonaws.com/dev/"
+
+    @ProductInterceptor
     @Provides
     fun provideInterceptor(
         @ApplicationContext appContext: Context
@@ -44,11 +48,12 @@ internal object ProductRetrofitModule {
         } ?: return@BaseInterceptor setUpInterceptor(chain)
     }
 
+    @ProductRetrofit
     @Provides
     fun providerRetrofit(
-        baseUrl: String,
-        client: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
+        @ProductBaseURL baseUrl: String,
+        @ProductOkHttpClient client: OkHttpClient,
+        @ProductGsonConverterFactory gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -57,10 +62,11 @@ internal object ProductRetrofitModule {
             .build()
     }
 
+    @ProductOkHttpClient
     @Provides
     fun providerOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
-        apiInterceptor: Interceptor
+        @ProductHttpLoggingInterceptor httpLoggingInterceptor: HttpLoggingInterceptor,
+        @ProductInterceptor apiInterceptor: Interceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
@@ -71,11 +77,13 @@ internal object ProductRetrofitModule {
             .build()
     }
 
+    @ProductGsonConverterFactory
     @Provides
     fun providerGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
 
+    @ProductHttpLoggingInterceptor
     @Provides
     fun providerHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()

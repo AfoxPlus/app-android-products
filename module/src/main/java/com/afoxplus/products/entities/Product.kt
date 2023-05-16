@@ -1,7 +1,10 @@
 package com.afoxplus.products.entities
 
 import android.os.Parcelable
+import com.afoxplus.products.entities.bussineslogic.OfferProductStrategy
 import com.afoxplus.products.entities.bussineslogic.SaleProductStrategy
+import com.afoxplus.products.entities.types.AppetizerDish
+import com.afoxplus.products.entities.types.MenuDish
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -14,7 +17,8 @@ data class Product(
     val currency: Currency,
     var stock: Int,
     private var price: Double,
-    var saleStrategy: SaleProductStrategy? = null
+    val productType: ProductType,
+    var saleStrategy: SaleProductStrategy? = null,
 ) : Parcelable {
 
     fun addSaleProductStrategy(saleStrategy: SaleProductStrategy) {
@@ -40,4 +44,13 @@ data class Product(
     fun getOriginalPriceWithFormat(): String =
         "${currency.value} ${String.format("%.2f", getOriginalPrice())}"
 
+    fun getOfferProductStrategy(): OfferProductStrategy? {
+        return if (saleStrategy is OfferProductStrategy) {
+            saleStrategy as OfferProductStrategy
+        } else null
+    }
+
+    fun isMenuDishType(): Boolean = productType is MenuDish
+    fun getMenuDishType(): MenuDish? = productType as MenuDish?
+    fun isAppetizerType(): Boolean = productType is AppetizerDish
 }

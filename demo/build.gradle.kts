@@ -11,7 +11,7 @@ android {
     buildToolsVersion = Versions.buildToolsVersion
 
     defaultConfig {
-        applicationId = "com.afoxplus.app_android_home.demo"
+        applicationId = "com.afoxplus.app_android_products.demo"
         minSdk = Versions.minSdkVersion
         targetSdk = Versions.targetSdkVersion
         versionCode = 1
@@ -19,7 +19,6 @@ android {
         testInstrumentationRunner = Versions.testInstrumentationRunner
         vectorDrawables.useSupportLibrary = true
     }
-
 
     buildTypes {
         getByName("release") {
@@ -29,16 +28,21 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+    kotlinOptions.jvmTarget = "${JavaVersion.VERSION_11}"
 
     buildFeatures {
         viewBinding = true
         dataBinding = true
+    }
+
+    lint {
+        isCheckDependencies = true
     }
 }
 
@@ -49,11 +53,13 @@ dependencies {
     implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
     implementation(Deps.Jetpack.appcompat)
+
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
+    implementation(Deps.UI.uikit)
+
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
-    implementation("com.afoxplus.android:uikit:1.0.0")
     implementation(project(mapOf("path" to ":module")))
 
     testImplementation(Deps.Test.jUnit)
