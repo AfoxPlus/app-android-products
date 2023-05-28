@@ -6,6 +6,7 @@ import com.afoxplus.products.entities.Product
 import com.afoxplus.products.entities.ProductType
 import com.afoxplus.products.entities.bussineslogic.strategies.DiscountByOffer
 import com.afoxplus.products.usecases.repositories.ProductRepository
+import com.afoxplus.uikit.objects.vendor.Vendor
 import com.afoxplus.uikit.objects.vendor.VendorShared
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -15,6 +16,7 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
 class FetchAppetizerByCurrentRestaurantUseCaseTest {
@@ -59,7 +61,9 @@ class FetchAppetizerByCurrentRestaurantUseCaseTest {
     @Test
     fun `should call fetchAppetizers`() {
         runBlocking {
-            fetchAppetizerUseCase.invoke()
+            val vendor = Vendor(tableId ="01", restaurantId = "01",waiterId = null )
+            whenever(shared.fetch()).thenReturn(vendor)
+            fetchAppetizerUseCase()
             verify(productRepository).fetchAppetizers(any())
         }
     }
