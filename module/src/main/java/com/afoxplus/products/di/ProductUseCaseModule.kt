@@ -3,8 +3,8 @@ package com.afoxplus.products.di
 import com.afoxplus.products.delivery.helpres.GetProductsStringsHelper
 import com.afoxplus.products.delivery.helpres.GetProductsStringsHelperImpl
 import com.afoxplus.products.usecases.*
-import com.afoxplus.products.usecases.FetchAppetizerUseCase
-import com.afoxplus.products.usecases.FetchProductsUseCase
+import com.afoxplus.products.usecases.FetchAppetizerByCurrentRestaurantUseCase
+import com.afoxplus.products.usecases.FetchProductByCurrentRestaurantUseCase
 import com.afoxplus.products.usecases.FindProductUseCase
 import com.afoxplus.products.usecases.FindSaleProductStrategyUseCase
 import com.afoxplus.products.usecases.HasProductStockUseCase
@@ -18,7 +18,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 internal interface ProductUseCaseModule {
     @Binds
-    fun bindFetchProductsUseCase(fetchProducts: FetchProductsUseCase): FetchProduct
+    fun bindFetchProductsUseCase(fetchProducts: FetchProductByCurrentRestaurantUseCase): FetchProductByCurrentRestaurant
 
     @Binds
     fun bindFindSaleProductStrategy(findSaleProductStrategy: FindSaleProductStrategyUseCase): FindSaleProductStrategy
@@ -30,16 +30,16 @@ internal interface ProductUseCaseModule {
     fun bindHasProductStock(hasProductStock: HasProductStockUseCase): HasProductStock
 
     @Binds
-    fun bindFetchAppetizer(fetchAppetizer: FetchAppetizerUseCase): FetchAppetizer
+    fun bindFetchAppetizer(fetchAppetizer: FetchAppetizerByCurrentRestaurantUseCase): FetchAppetizerByCurrentRestaurant
 
     @Binds
     fun bindFetchHomeOffer(fetchHomeOffer: FetchHomeOfferUseCase): FetchHomeOffer
 
     @Binds
-    fun bindFetchSaleOffer(fetchSaleOffer: FetchSaleOfferUseCase): FetchSaleOffer
+    fun bindFetchSaleOffer(fetchSaleOffer: FetchSaleOfferByCurrentRestaurantUseCase): FetchSaleOfferByCurrentRestaurant
 
     @Binds
-    fun bindFetchMenu(fetchMenu: FetchMenuUseCase): FetchMenu
+    fun bindFetchMenu(fetchMenu: FetchMenuByCurrentRestaurantUseCase): FetchMenuByCurrentRestaurant
 
     @Binds
     fun GetProductsStringsHelper(getProductsStringsHelper: GetProductsStringsHelperImpl): GetProductsStringsHelper

@@ -14,13 +14,13 @@ import com.afoxplus.products.delivery.views.adapters.ProductAdapter
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.extensions.setGone
 import com.afoxplus.uikit.extensions.setVisible
-import com.afoxplus.uikit.fragments.BaseFragment
+import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import com.afoxplus.uikit.views.status.ListEmptyData
 import com.afoxplus.uikit.views.status.ListError
 import com.afoxplus.uikit.views.status.ListLoading
 import com.afoxplus.uikit.views.status.ListSuccess
 
-internal class ProductSaleFragment : BaseFragment() {
+internal class ProductSaleFragment : UIKitBaseFragment() {
 
     private lateinit var binding: FragmentProductsSaleBinding
 

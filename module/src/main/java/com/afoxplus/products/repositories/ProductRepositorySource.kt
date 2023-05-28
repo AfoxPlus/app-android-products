@@ -10,19 +10,20 @@ import javax.inject.Inject
 internal class ProductRepositorySource @Inject constructor(
     private val productNetworkDataSource: ProductNetworkDataSource
 ) : ProductRepository {
-    override suspend fun fetchHomeOffers(): List<Product> =
-        productNetworkDataSource.fetchHomeOffers()
+    override suspend fun fetchOffers(): List<Product> =
+        productNetworkDataSource.fetchOffers()
 
-    override suspend fun fetch(description: String): List<Product> =
-        productNetworkDataSource.fetch(description)
+    override suspend fun fetch(restaurantCode: String, description: String): List<Product> =
+        productNetworkDataSource.fetch(restaurantCode, description)
 
-    override suspend fun fetchSaleOffers(): List<Product> =
-        productNetworkDataSource.fetchSaleOffers()
+    override suspend fun fetchSaleOffers(restaurantCode: String): List<Product> =
+        productNetworkDataSource.fetchSaleOffers(restaurantCode)
 
-    override suspend fun fetchAppetizers(): List<Product> =
-        productNetworkDataSource.fetchAppetizers()
+    override suspend fun fetchAppetizers(restaurantCode: String): List<Product> =
+        productNetworkDataSource.fetchAppetizers(restaurantCode)
 
-    override suspend fun fetchMenu(): List<Product> = productNetworkDataSource.fetchMenu()
+    override suspend fun fetchMenu(restaurantCode: String): List<Product> =
+        productNetworkDataSource.fetchMenu(restaurantCode)
 
     override suspend fun find(code: String): Product = productNetworkDataSource.find(code)
 

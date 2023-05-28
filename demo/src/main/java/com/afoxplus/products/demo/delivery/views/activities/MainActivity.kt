@@ -6,20 +6,20 @@ import androidx.viewpager2.widget.ViewPager2
 import com.afoxplus.products.delivery.flow.ProductFlow
 import com.afoxplus.products.demo.databinding.ActivityMainBinding
 import com.afoxplus.products.demo.delivery.viewmodels.MainViewModel
-import com.afoxplus.uikit.activities.BaseActivity
-import com.afoxplus.uikit.adapters.ViewPagerAdapter
-import com.afoxplus.uikit.bus.EventObserver
+import com.afoxplus.uikit.activities.UIKitBaseActivity
+import com.afoxplus.uikit.adapters.UIKitViewPagerAdapter
+import com.afoxplus.uikit.bus.UIKitEventObserver
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
+class MainActivity : UIKitBaseActivity() {
     private lateinit var binding: ActivityMainBinding
 
     @Inject
     lateinit var productFlow: ProductFlow
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var viewPagerAdapter: ViewPagerAdapter
+    private lateinit var viewPagerAdapter: UIKitViewPagerAdapter
 
     override fun setMainView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,7 +27,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setUpView() {
-        viewPagerAdapter = ViewPagerAdapter(
+        viewPagerAdapter = UIKitViewPagerAdapter(
             supportFragmentManager,
             lifecycle,
             listOf(
@@ -41,11 +41,11 @@ class MainActivity : BaseActivity() {
     }
 
     override fun observerViewModel() {
-        viewModel.productClicked.observe(this, EventObserver { product ->
+        viewModel.productClicked.observe(this, UIKitEventObserver { product ->
             Toast.makeText(this, "${product.name} is Clicked", Toast.LENGTH_SHORT).show()
         })
 
-        viewModel.productOfferClicked.observe(this, EventObserver { product ->
+        viewModel.productOfferClicked.observe(this, UIKitEventObserver { product ->
             Toast.makeText(this, "${product.name} offer is Clicked", Toast.LENGTH_SHORT).show()
         })
     }

@@ -6,30 +6,34 @@ import com.afoxplus.products.entities.Product
 import com.afoxplus.products.entities.ProductType
 import com.afoxplus.products.entities.bussineslogic.strategies.DiscountByOffer
 import com.afoxplus.products.usecases.repositories.ProductRepository
+import com.afoxplus.uikit.objects.vendor.VendorShared
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
-class FetchAppetizerUseCaseTest {
+class FetchAppetizerByCurrentRestaurantUseCaseTest {
 
     @Mock
     private lateinit var productRepository: ProductRepository
 
     @Mock
+    private lateinit var shared: VendorShared
+
+    @Mock
     private lateinit var productType: ProductType
     private lateinit var discountByOffer: DiscountByOffer
-    private lateinit var fetchAppetizerUseCase: FetchAppetizerUseCase
+    private lateinit var fetchAppetizerUseCase: FetchAppetizerByCurrentRestaurantUseCase
     private lateinit var listAppetizer: List<Product>
 
     @Before
     fun setUp() {
-        fetchAppetizerUseCase = FetchAppetizerUseCase(productRepository)
+        fetchAppetizerUseCase = FetchAppetizerByCurrentRestaurantUseCase(productRepository,shared)
         discountByOffer = DiscountByOffer(
             strategyCode = "TEST",
             percentDiscount = 0.20,
@@ -55,9 +59,8 @@ class FetchAppetizerUseCaseTest {
     @Test
     fun `should call fetchAppetizers`() {
         runBlocking {
-            whenever(productRepository.fetchAppetizers()).thenReturn(listAppetizer)
             fetchAppetizerUseCase.invoke()
-            verify(productRepository).fetchAppetizers()
+            verify(productRepository).fetchAppetizers(any())
         }
     }
 
