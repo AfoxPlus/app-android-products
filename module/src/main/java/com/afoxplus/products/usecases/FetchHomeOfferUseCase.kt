@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 internal class FetchHomeOfferUseCase @Inject constructor(private val productRepository: ProductRepository) :
     FetchHomeOffer {
-    override suspend fun invoke(): List<Product> = productRepository.fetchHomeOffers()
+    override suspend fun invoke(): List<Product> = productRepository.fetchOffers()
 }

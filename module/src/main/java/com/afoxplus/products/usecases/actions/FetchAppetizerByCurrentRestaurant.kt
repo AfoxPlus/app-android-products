@@ -2,6 +2,6 @@ package com.afoxplus.products.usecases.actions
 
 import com.afoxplus.products.entities.Product
 
-interface FetchSaleOffer {
+fun interface FetchAppetizerByCurrentRestaurant {
     suspend operator fun invoke(): List<Product>
 }

@@ -19,14 +19,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:onClick="@{() -> onClickItemRecommendedProduct.invoke(product)}"
-        app:cardBackgroundColor="@color/orange_03"
+        app:cardBackgroundColor="@color/pink_02"
         app:cardCornerRadius="13dp"
         app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:background="#FFC8BD">
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageHomeOffer"
@@ -62,7 +61,7 @@
                 android:layout_marginStart="16dp"
                 android:gravity="center"
                 android:text="@{product.priceForSaleWithFormat}"
-                android:textColor="@color/orange_02"
+                android:textColor="@color/orange_01"
                 app:layout_constraintEnd_toStartOf="@+id/originalPriceHomeOffer"
                 app:layout_constraintStart_toEndOf="@+id/imageHomeOffer"
                 app:layout_constraintTop_toBottomOf="@+id/titleHomeOffer"

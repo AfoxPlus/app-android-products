@@ -73,7 +73,7 @@
                 android:layout_marginBottom="12dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@{product.priceForSaleWithFormat}"
-                android:textColor="@color/orange_02"
+                android:textColor="@color/orange_01"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageOffer"
                 app:layout_constraintStart_toStartOf="@+id/descriptionOffer"
