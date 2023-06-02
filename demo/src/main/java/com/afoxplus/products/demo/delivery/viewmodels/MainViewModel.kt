@@ -10,8 +10,6 @@ import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
-import com.afoxplus.uikit.objects.vendor.Vendor
-import com.afoxplus.uikit.objects.vendor.VendorShared
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -20,8 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val productEventBus: UIKitEventBusWrapper,
-    private val coroutines: UIKitCoroutineDispatcher,
-    private val vendorShared: VendorShared
+    private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
 
@@ -32,8 +29,6 @@ class MainViewModel @Inject constructor(
     val productOfferClicked: LiveData<UIKitEvent<Product>> get() = mProductOfferClicked
 
     init {
-
-        vendorShared.save(Vendor(tableId = "01", restaurantId = "61a19c440b6de1476436de4a"))
 
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             productEventBus.getBusEventFlow().collectLatest { event ->
