@@ -1,5 +1,6 @@
 package com.afoxplus.products.di
 
+import com.afoxplus.network.api.ProductNetworkRetrofit
 import com.afoxplus.products.repositories.sources.network.api.MeasureApiNetwork
 import com.afoxplus.products.repositories.sources.network.api.ProductApiNetwork
 import dagger.Module
@@ -13,12 +14,12 @@ import retrofit2.Retrofit
 internal object ProductApiNetworkModule {
     @Provides
     fun providerMeasureService(
-        @ProductRetrofit retrofit: Retrofit
+        @ProductNetworkRetrofit retrofit: Retrofit
     ): MeasureApiNetwork = retrofit.create(MeasureApiNetwork::class.java)
 
     @Provides
     fun providerProductService(
-        @ProductRetrofit retrofit: Retrofit
+        @ProductNetworkRetrofit retrofit: Retrofit
     ): ProductApiNetwork = retrofit.create(ProductApiNetwork::class.java)
 
 }
