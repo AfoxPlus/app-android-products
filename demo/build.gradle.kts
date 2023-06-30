@@ -102,6 +102,11 @@ dependencies {
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
 
+    // Chucker
+    debugImplementation(Deps.Arch.chucker)
+    "stagingImplementation"(Deps.Arch.chucker)
+    releaseImplementation(Deps.Arch.chuckerNoOp)
+
     implementation(Deps.Arch.network)
 
     implementation(Deps.Arch.hiltAndroid)
