@@ -61,7 +61,7 @@ class FetchAppetizerByCurrentRestaurantUseCaseTest {
     @Test
     fun `should call fetchAppetizers`() {
         runBlocking {
-            val vendor = Vendor(tableId ="01", restaurantId = "01",waiterId = null )
+            val vendor = Vendor(tableId ="01", restaurantId = "01")
             whenever(shared.fetch()).thenReturn(vendor)
             fetchAppetizerUseCase()
             verify(productRepository).fetchAppetizers(any())

@@ -5,8 +5,16 @@ import com.afoxplus.products.demo.BuildConfig
 import javax.inject.Inject
 
 class AppPropertiesDemo @Inject constructor() : AppProperties {
+    override fun getCurrencyID(): String {
+        return "getCurrencyID"
+    }
+
     override fun getDeviceData(): String {
-        return ""
+        return "getDeviceData"
+    }
+
+    override fun getUserUUID(): String {
+        return "getUserUUID"
     }
 
     override fun isAppDebug(): Boolean {

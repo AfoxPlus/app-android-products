@@ -13,6 +13,6 @@ class DemoApplication : Application() {
     lateinit var vendorShared: VendorShared
     override fun onCreate() {
         super.onCreate()
-        vendorShared.save(Vendor(tableId = "01", restaurantId = "61a19c440b6de1476436de4a"))
+        vendorShared.save(Vendor(tableId = "01", restaurantId = "648f94bd704db9741d1d2c04"))
     }
 }
