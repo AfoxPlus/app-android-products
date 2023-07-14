@@ -10,13 +10,13 @@ import com.afoxplus.products.delivery.viewmodels.ProductViewModel
 import com.afoxplus.products.delivery.views.adapters.ProductAdapter
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.extensions.setGone
-import com.afoxplus.uikit.fragments.BaseFragment
+import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import com.afoxplus.uikit.views.status.ListEmptyData
 import com.afoxplus.uikit.views.status.ListError
 import com.afoxplus.uikit.views.status.ListLoading
 import com.afoxplus.uikit.views.status.ListSuccess
 
-internal class ProductHomeOfferFragment : BaseFragment() {
+internal class ProductHomeOfferFragment : UIKitBaseFragment() {
     private lateinit var fragmentHomeOfferBinding: FragmentProductsHomeOfferBinding
     private val productViewModel: ProductViewModel by activityViewModels()
     private val productHomeOfferAdapter: ProductAdapter by lazy { ProductAdapter() }

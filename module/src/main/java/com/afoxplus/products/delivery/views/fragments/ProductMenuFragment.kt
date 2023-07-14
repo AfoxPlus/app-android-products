@@ -11,13 +11,13 @@ import com.afoxplus.products.delivery.views.adapters.ProductAdapter
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.extensions.setGone
 import com.afoxplus.uikit.extensions.setVisible
-import com.afoxplus.uikit.fragments.BaseFragment
+import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import com.afoxplus.uikit.views.status.ListEmptyData
 import com.afoxplus.uikit.views.status.ListError
 import com.afoxplus.uikit.views.status.ListLoading
 import com.afoxplus.uikit.views.status.ListSuccess
 
-internal class ProductMenuFragment : BaseFragment() {
+internal class ProductMenuFragment : UIKitBaseFragment() {
     private lateinit var fragmentMenuBinding: FragmentProductsMenuBinding
     private val productViewModel: ProductViewModel by activityViewModels()
     private val productAppetizerAdapter: ProductAdapter by lazy { ProductAdapter() }

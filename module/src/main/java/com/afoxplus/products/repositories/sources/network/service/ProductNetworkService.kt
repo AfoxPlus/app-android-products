@@ -13,75 +13,77 @@ import com.afoxplus.products.repositories.sources.network.api.response.ProductSa
 import java.io.IOException
 import javax.inject.Inject
 
-internal class ProductNetworkService @Inject constructor(private val productService: ProductApiNetwork) :
+internal class ProductNetworkService @Inject constructor(
+    private val productService: ProductApiNetwork
+) :
     ProductNetworkDataSource {
 
-    override suspend fun fetchHomeOffers(): List<Product> {
+    override suspend fun fetchOffers(): List<Product> {
         val response = productService.fetchHomeOffers()
         var productList: List<Product> = arrayListOf()
         response.map { productList = ProductResponse.mapToProduct(it.payload) }
         return productList
     }
 
-    override suspend fun fetch(description: String): List<Product> {
-        val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to "61a19c440b6de1476436de4a")
+    override suspend fun fetch(restaurantCode: String, productName: String): List<Product> {
+        val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to restaurantCode)
         val response = productService.fetch(
             headers = headerMap,
-            query = ProductQueryRequest(productName = description)
+            query = ProductQueryRequest(productName = productName)
         )
         var productList: List<Product> = arrayListOf()
         response.map { productList = ProductResponse.mapToProduct(it.payload) }
         return productList
     }
 
-    override suspend fun fetchSaleOffers(): List<Product> {
-        val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to "61a19c440b6de1476436de4a")
+    override suspend fun fetchSaleOffers(restaurantCode: String): List<Product> {
+        val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to restaurantCode)
         val response = productService.fetchSaleOffers(headerMap)
         var productList: List<Product> = arrayListOf()
         response.map { productList = ProductResponse.mapToProduct(it.payload) }
         return productList
     }
 
-    override suspend fun fetchAppetizers(): List<Product> {
-        val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to "61a19c440b6de1476436de4a")
+    override suspend fun fetchAppetizers(restaurantCode: String): List<Product> {
+        val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to restaurantCode)
         val response = productService.fetchAppetizers(headerMap)
         var productList: List<Product> = arrayListOf()
         response.map { productList = ProductResponse.mapToProduct(it.payload) }
         return productList
     }
 
-    override suspend fun fetchMenu(): List<Product> {
-        val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to "61a19c440b6de1476436de4a")
+    override suspend fun fetchMenu(restaurantCode: String): List<Product> {
+        val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to restaurantCode)
         val response = productService.fetchMenu(headerMap)
         var productList: List<Product> = arrayListOf()
         response.map { productList = ProductResponse.mapToProduct(it.payload) }
         return productList
     }
 
-    override suspend fun find(code: String): Product {
-        val response = productService.find(code)
+    override suspend fun find(productCode: String): Product {
+        val response = productService.find(productCode)
         var product: Product? = null
         response.map { product = ProductResponse.mapToProduct(it.payload) }
         return product ?: throw IOException(API_PRODUCT_INTERNAL_ERROR)
     }
 
-    override suspend fun find(code: String, measure: Measure): Product {
-        val response = productService.find(code, measure.code)
+    override suspend fun find(productCode: String, measure: Measure): Product {
+        val response = productService.find(productCode, measure.code)
         var product: Product? = null
         response.map { product = ProductResponse.mapToProduct(it.payload) }
         return product
             ?: throw IOException(API_PRODUCT_INTERNAL_ERROR)
     }
 
-    override suspend fun hasStock(code: String): Boolean {
-        val response = productService.hasStock(code)
+    override suspend fun hasStock(productCode: String): Boolean {
+        val response = productService.hasStock(productCode)
         var hasStock = false
         response.map { hasStock = it.payload.hasStock }
         return hasStock
     }
 
-    override suspend fun findSaleStrategy(code: String): SaleProductStrategy {
-        val response = productService.findSaleStrategy(code)
+    override suspend fun findSaleStrategy(productCode: String): SaleProductStrategy {
+        val response = productService.findSaleStrategy(productCode)
         var saleStrategy: SaleProductStrategy? = null
         response.map {
             saleStrategy = ProductSaleStrategyResponse.mapToProductSaleStrategy(it.payload)

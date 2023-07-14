@@ -1,5 +1,7 @@
 package com.afoxplus.products.repositories.sources.network.api
 
+import com.afoxplus.network.annotations.ServiceClient
+import com.afoxplus.network.api.UrlProvider
 import com.afoxplus.network.response.BaseResponse
 import com.afoxplus.products.repositories.sources.network.api.request.ProductQueryRequest
 import com.afoxplus.products.repositories.sources.network.api.response.ProductResponse
@@ -8,6 +10,7 @@ import com.afoxplus.products.repositories.sources.network.api.response.ProductSt
 import retrofit2.Response
 import retrofit2.http.*
 
+@ServiceClient(type = UrlProvider.Type.API_PRODUCTS)
 internal interface ProductApiNetwork {
     companion object {
         const val PATH_PRODUCT = "product"

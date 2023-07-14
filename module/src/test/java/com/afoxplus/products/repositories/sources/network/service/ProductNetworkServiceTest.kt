@@ -31,31 +31,32 @@ class ProductNetworkServiceTest {
     @Test
     fun `should call fetchSaleOffers`() {
         runBlocking {
-            val headerMap = mapOf("restaurant_code" to "61a19c440b6de1476436de4a")
+            val restaurantCode = "61a19c440b6de1476436de4a"
+            val headerMap = mapOf("restaurant_code" to restaurantCode)
             whenever(productApiNetwork.fetchSaleOffers(headerMap)).thenReturn(
-                Response.success(
-                    BaseResponse(
-                        true, "Ok", listOf(
-                            ProductResponse(
-                                code = "PROD",
-                                name = "Plato",
-                                description = "",
-                                imageUrl = "",
-                                stock = 0,
-                                price = 20.5,
-                                measure = MeasureResponse(
-                                    code = "UNI",
-                                    value = "Unidad"
-                                ),
-                                currency = CurrencyResponse(code = "PEN", value = "S/")
-                            )
-                        )
-                    )
-                )
+                Response.success(BaseResponse(true, "Ok", products))
             )
-            productNetworkService.fetchSaleOffers()
+
+            productNetworkService.fetchSaleOffers(restaurantCode)
+
             verify(productApiNetwork).fetchSaleOffers(headerMap)
         }
     }
 
+
+    private val products = listOf(
+        ProductResponse(
+            code = "PROD",
+            name = "Plato",
+            description = "",
+            imageUrl = "",
+            stock = 0,
+            price = 20.5,
+            measure = MeasureResponse(
+                code = "UNI",
+                value = "Unidad"
+            ),
+            currency = CurrencyResponse(code = "PEN", value = "S/")
+        )
+    )
 }

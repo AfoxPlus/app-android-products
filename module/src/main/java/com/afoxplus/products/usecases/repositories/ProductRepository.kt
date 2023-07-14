@@ -5,11 +5,11 @@ import com.afoxplus.products.entities.Product
 import com.afoxplus.products.entities.bussineslogic.SaleProductStrategy
 
 internal interface ProductRepository {
-    suspend fun fetchHomeOffers(): List<Product>
-    suspend fun fetch(description: String): List<Product>
-    suspend fun fetchSaleOffers(): List<Product>
-    suspend fun fetchAppetizers(): List<Product>
-    suspend fun fetchMenu(): List<Product>
+    suspend fun fetchOffers(): List<Product>
+    suspend fun fetch(restaurantCode: String, description: String): List<Product>
+    suspend fun fetchSaleOffers(restaurantCode: String): List<Product>
+    suspend fun fetchAppetizers(restaurantCode: String): List<Product>
+    suspend fun fetchMenu(restaurantCode: String): List<Product>
     suspend fun find(code: String): Product
     suspend fun find(code: String, measure: Measure): Product
     suspend fun hasStock(code: String): Boolean
