@@ -25,7 +25,7 @@ internal class ProductViewModel @Inject constructor(
     private val fetchSaleOfferByCurrentRestaurant: FetchSaleOfferByCurrentRestaurant,
     private val fetchAppetizerByCurrentRestaurant: FetchAppetizerByCurrentRestaurant,
     private val fetchMenuByCurrentRestaurant: FetchMenuByCurrentRestaurant,
-    private val productEventBus: UIKitEventBusWrapper,
+    private val eventBusWrapper: UIKitEventBusWrapper,
     private val getProductsStringsHelper: GetProductsStringsHelper,
     private val uiKitCoroutineDispatcher: UIKitCoroutineDispatcher,
 ) : ViewModel() {
@@ -133,13 +133,12 @@ internal class ProductViewModel @Inject constructor(
 
     fun onClickProductEvent(product: Product) =
         viewModelScope.launch(uiKitCoroutineDispatcher.getMainDispatcher()) {
-
-            productEventBus.send(OnClickProductSaleEvent.build(product))
+            eventBusWrapper.send(OnClickProductSaleEvent(product))
         }
 
     fun onClickProductOfferEvent(product: Product) =
         viewModelScope.launch(uiKitCoroutineDispatcher.getMainDispatcher()) {
-            productEventBus.send(OnClickProductOfferEvent.build(product))
+            eventBusWrapper.send(OnClickProductOfferEvent(product))
         }
 
     data class EmptyProduct<T>(val title: Int, val description: Int) : ListState<T>
