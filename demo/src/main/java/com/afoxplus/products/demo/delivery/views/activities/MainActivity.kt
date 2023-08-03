@@ -2,14 +2,17 @@ package com.afoxplus.products.demo.delivery.views.activities
 
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.afoxplus.products.delivery.flow.ProductFlow
+import com.afoxplus.products.delivery.views.events.OnClickProductOfferEvent
+import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.products.demo.databinding.ActivityMainBinding
 import com.afoxplus.products.demo.delivery.viewmodels.MainViewModel
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.adapters.UIKitViewPagerAdapter
-import com.afoxplus.uikit.bus.UIKitEventObserver
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,12 +44,26 @@ class MainActivity : UIKitBaseActivity() {
     }
 
     override fun observerViewModel() {
-        viewModel.productClicked.observe(this, UIKitEventObserver { product ->
-            Toast.makeText(this, "${product.name} is Clicked", Toast.LENGTH_SHORT).show()
-        })
+        lifecycleScope.launchWhenCreated {
+            viewModel.onEventBusListener.collectLatest { events ->
+                when (events) {
+                    is OnClickProductOfferEvent -> {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "${events.product.name} offer is Clicked",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
-        viewModel.productOfferClicked.observe(this, UIKitEventObserver { product ->
-            Toast.makeText(this, "${product.name} offer is Clicked", Toast.LENGTH_SHORT).show()
-        })
+                    is OnClickProductSaleEvent -> {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "${events.product.name} is Clicked",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
     }
 }
