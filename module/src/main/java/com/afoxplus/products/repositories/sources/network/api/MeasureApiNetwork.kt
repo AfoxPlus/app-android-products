@@ -1,6 +1,7 @@
 package com.afoxplus.products.repositories.sources.network.api
 
 import com.afoxplus.network.annotations.ServiceClient
+import com.afoxplus.network.api.NetworkResult
 import com.afoxplus.network.api.UrlProvider
 import com.afoxplus.products.repositories.sources.network.api.response.MeasureResponse
 import retrofit2.Response
@@ -13,5 +14,5 @@ internal interface MeasureApiNetwork {
     }
 
     @GET(PATH_MEASURE)
-    suspend fun fetchMeasure(): Response<List<MeasureResponse>>
+    suspend fun fetchMeasure(): NetworkResult<List<MeasureResponse>>
 }

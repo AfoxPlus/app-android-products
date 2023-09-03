@@ -1,5 +1,6 @@
 package com.afoxplus.products.repositories.sources.network.service
 
+import com.afoxplus.network.api.NetworkResult
 import com.afoxplus.network.response.BaseResponse
 import com.afoxplus.products.repositories.sources.network.api.ProductApiNetwork
 import com.afoxplus.products.repositories.sources.network.api.response.CurrencyResponse
@@ -13,7 +14,6 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class ProductNetworkServiceTest {
@@ -34,7 +34,7 @@ class ProductNetworkServiceTest {
             val restaurantCode = "61a19c440b6de1476436de4a"
             val headerMap = mapOf("restaurant_code" to restaurantCode)
             whenever(productApiNetwork.fetchSaleOffers(headerMap)).thenReturn(
-                Response.success(BaseResponse(true, "Ok", products))
+                NetworkResult.Success(data = BaseResponse(true, "Ok", products))
             )
 
             productNetworkService.fetchSaleOffers(restaurantCode)

@@ -13,6 +13,7 @@ import com.afoxplus.products.entities.Product
 import com.afoxplus.products.usecases.actions.*
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
+import com.afoxplus.uikit.result.UIKitResultState
 import com.afoxplus.uikit.views.status.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -43,91 +44,116 @@ internal class ProductViewModel @Inject constructor(
     val productsHomeOffer: LiveData<ListState<ProductUIModel>> get() = mProductsHomeOffer
 
     fun fetchProductSales() = viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
-        try {
-            mProductsSale.postValue(ListLoading())
-            val result = fetchProductsByCurrentRestaurant("").map { item ->
-                ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_SALE, item)
-            }
-            if (result.isEmpty())
-                getProductsStringsHelper.getSalesEmptyStringsUIModel().let { resource ->
-                    mProductsSale.postValue(resource.toEmptyProduct())
+
+        mProductsSale.postValue(ListLoading())
+        when (val result = fetchProductsByCurrentRestaurant("")) {
+            is UIKitResultState.Success -> {
+                val data = result.data.map { item ->
+                    ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_SALE, item)
                 }
-            else
-                mProductsSale.postValue(ListSuccess(result))
-        } catch (ex: Exception) {
-            mProductsSale.postValue(ListError(ex))
+                if (data.isEmpty())
+                    getProductsStringsHelper.getSalesEmptyStringsUIModel().let { resource ->
+                        mProductsSale.postValue(resource.toEmptyProduct())
+                    }
+                else
+                    mProductsSale.postValue(ListSuccess(data))
+            }
+
+            is UIKitResultState.Error -> {
+                mProductsSale.postValue(ListError(Exception(result.message)))
+            }
+
         }
     }
 
     fun fetchProductOffers() = viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
-        try {
-            val data = fetchSaleOfferByCurrentRestaurant().map { item ->
-                ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_OFFER, item)
+        when (val result = fetchSaleOfferByCurrentRestaurant()) {
+            is UIKitResultState.Success -> {
+                val data = result.data.map { item ->
+                    ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_OFFER, item)
+                }
+                if (data.isEmpty())
+                    mProductOffer.postValue(ListEmptyData())
+                else
+                    mProductOffer.postValue(ListSuccess(data))
             }
-            if (data.isEmpty())
-                mProductOffer.postValue(ListEmptyData())
-            else
-                mProductOffer.postValue(ListSuccess(data))
-        } catch (ex: Exception) {
-            mProductOffer.postValue(ListError(ex))
+
+            is UIKitResultState.Error -> {
+                mProductOffer.postValue(ListError(Exception(result.message)))
+            }
         }
     }
 
     fun fetchProductsAppetizer() =
         viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
-            try {
-                mProductAppetizer.postValue(ListLoading())
-                val result = fetchAppetizerByCurrentRestaurant()
-                if (result.isEmpty())
-                    mProductAppetizer.postValue(ListEmptyData())
-                else {
-                    val mapResult = result.map { item ->
-                        ProductUIModel(
-                            ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER,
-                            item
-                        )
+            mProductAppetizer.postValue(ListLoading())
+            when (val result = fetchAppetizerByCurrentRestaurant()) {
+                is UIKitResultState.Success -> {
+                    if (result.data.isEmpty())
+                        mProductAppetizer.postValue(ListEmptyData())
+                    else {
+                        val mapResult = result.data.map { item ->
+                            ProductUIModel(
+                                ProductUIModel.VIEW_TYPE_PRODUCT_APPETIZER,
+                                item
+                            )
+                        }
+                        mProductAppetizer.postValue(ListSuccess(mapResult))
                     }
-                    mProductAppetizer.postValue(ListSuccess(mapResult))
                 }
-            } catch (ex: Exception) {
-                mProductAppetizer.postValue(ListError(ex))
+
+                is UIKitResultState.Error -> {
+                    mProductAppetizer.postValue(ListError(Exception(result.message)))
+                }
+
+                else -> {
+                    // Nothing
+                }
             }
+
+
         }
 
     fun fetchProductsMenu() = viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
-        try {
-            mProductsMenu.postValue(ListLoading())
-            val result = fetchMenuByCurrentRestaurant()
-            if (result.isEmpty()) {
-                getProductsStringsHelper.getMenuEmptyStringsUIModel().let { resource ->
-                    mProductsMenu.postValue(resource.toEmptyProduct())
+        mProductsMenu.postValue(ListLoading())
+        when (val result = fetchMenuByCurrentRestaurant()) {
+            is UIKitResultState.Success -> {
+                if (result.data.isEmpty()) {
+                    getProductsStringsHelper.getMenuEmptyStringsUIModel().let { resource ->
+                        mProductsMenu.postValue(resource.toEmptyProduct())
+                    }
+                } else {
+                    val mapResult = result.data.map { item ->
+                        ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_MENU, item)
+                    }
+                    mProductsMenu.postValue(ListSuccess(mapResult))
                 }
-            } else {
-                val mapResult = result.map { item ->
-                    ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_MENU, item)
-                }
-                mProductsMenu.postValue(ListSuccess(mapResult))
             }
-        } catch (ex: Exception) {
-            mProductsMenu.postValue(ListError(ex))
+
+            is UIKitResultState.Error -> {
+                mProductsMenu.postValue(ListError(Exception(result.message)))
+            }
         }
     }
 
     fun fetchProductsHomeOffer() =
         viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
-            try {
-                mProductsHomeOffer.postValue(ListLoading())
-                val result = fetchHomeOffer()
-                if (result.isEmpty())
-                    mProductsHomeOffer.postValue(ListEmptyData())
-                else {
-                    val mapResult = result.map { item ->
-                        ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER, item)
+            mProductsHomeOffer.postValue(ListLoading())
+            when (val result = fetchHomeOffer()) {
+                is UIKitResultState.Success -> {
+                    if (result.data.isEmpty())
+                        mProductsHomeOffer.postValue(ListEmptyData())
+                    else {
+                        val mapResult = result.data.map { item ->
+                            ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_HOME_OFFER, item)
+                        }
+                        mProductsHomeOffer.postValue(ListSuccess(mapResult))
                     }
-                    mProductsHomeOffer.postValue(ListSuccess(mapResult))
                 }
-            } catch (ex: Exception) {
-                mProductsHomeOffer.postValue(ListError(ex))
+
+                is UIKitResultState.Error -> {
+                    mProductsHomeOffer.postValue(ListError(Exception(result.message)))
+                }
             }
         }
 
