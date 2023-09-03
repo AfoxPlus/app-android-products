@@ -108,7 +108,7 @@ dependencies {
     implementation(Deps.UI.glide)
     kapt(Deps.UI.glideCompiler)
 
-    //implementation(Deps.Arch.network)
+    implementation(Deps.Arch.network)
     implementation(Deps.Arch.retrofit2)
     implementation(Deps.Arch.loggingInterceptor)
     implementation(Deps.Arch.gson)
@@ -126,7 +126,7 @@ dependencies {
     androidTestImplementation(Deps.Test.espresso)
 
     //Business Dependencies
-    //implementation(Deps.UI.uikit)
+    implementation(Deps.UI.uikit)
 
     LocalModules.setupBuildGradle(this, rootProject, "products")
 }
