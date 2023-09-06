@@ -4,7 +4,7 @@ import com.afoxplus.products.entities.Product
 import com.afoxplus.products.usecases.actions.FetchProductByCurrentRestaurant
 import com.afoxplus.products.usecases.repositories.ProductRepository
 import com.afoxplus.uikit.objects.vendor.VendorShared
-import com.afoxplus.uikit.result.UIKitResultState
+import com.afoxplus.uikit.result.ResultState
 import javax.inject.Inject
 
 internal class FetchProductByCurrentRestaurantUseCase @Inject constructor(
@@ -12,10 +12,10 @@ internal class FetchProductByCurrentRestaurantUseCase @Inject constructor(
     private val vendorShared: VendorShared
 ) :
     FetchProductByCurrentRestaurant {
-    override suspend fun invoke(productName: String): UIKitResultState<List<Product>> {
+    override suspend fun invoke(productName: String): ResultState<List<Product>> {
         return vendorShared.fetch()?.let { vendor ->
             productRepository.fetch(vendor.restaurantId, productName)
-        } ?: UIKitResultState.Success(emptyList())
+        } ?: ResultState.Success(emptyList())
     }
 
 }

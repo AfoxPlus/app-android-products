@@ -1,6 +1,6 @@
 {
-  "uikit"         : false,
-  "network"       : false,
+  "uikit"         : true,
+  "network"       : true,
   "auth"          : false,
   "home"          : false,
   "orders"        : false,

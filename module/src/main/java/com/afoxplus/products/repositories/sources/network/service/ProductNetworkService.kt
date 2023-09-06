@@ -9,29 +9,41 @@ import com.afoxplus.products.repositories.sources.network.api.ProductApiNetwork
 import com.afoxplus.products.repositories.sources.network.api.request.ProductQueryRequest
 import com.afoxplus.products.repositories.sources.network.api.response.ProductResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductSaleStrategyResponse
-import com.afoxplus.uikit.result.UIKitResultState
+import com.afoxplus.uikit.result.ErrorMessage
+import com.afoxplus.uikit.result.ErrorType
+import com.afoxplus.uikit.result.ResultState
 import javax.inject.Inject
 
 internal class ProductNetworkService @Inject constructor(
     private val productService: ProductApiNetwork
 ) : ProductNetworkDataSource {
 
-    override suspend fun fetchOffers(): UIKitResultState<List<Product>> {
+    override suspend fun fetchOffers(): ResultState<List<Product>> {
         return when (val response = productService.fetchHomeOffers()) {
             is NetworkResult.Success -> {
                 val productList = response.data.payload.map { ProductResponse.mapToProduct(it) }
-                UIKitResultState.Success(productList)
+                ResultState.Success(productList)
             }
 
             is NetworkResult.Error -> {
-                UIKitResultState.Error(
-                    response.message ?: API_PRODUCT_INTERNAL_ERROR,
-                    response.code
+                ResultState.Error(
+                    ErrorMessage(
+                        code = response.code,
+                        title = "",
+                        message = response.message ?: API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.ERROR
+                    )
                 )
             }
 
             is NetworkResult.Exception -> {
-                UIKitResultState.Error(API_PRODUCT_INTERNAL_ERROR)
+                ResultState.Error(
+                    ErrorMessage(
+                        title = "",
+                        message = API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.EXCEPTION
+                    )
+                )
             }
         }
     }
@@ -39,7 +51,7 @@ internal class ProductNetworkService @Inject constructor(
     override suspend fun fetch(
         restaurantCode: String,
         productName: String
-    ): UIKitResultState<List<Product>> {
+    ): ResultState<List<Product>> {
         val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to restaurantCode)
         return when (val response = productService.fetch(
             headers = headerMap,
@@ -47,163 +59,244 @@ internal class ProductNetworkService @Inject constructor(
         )) {
             is NetworkResult.Success -> {
                 val productList = response.data.payload.map { ProductResponse.mapToProduct(it) }
-                UIKitResultState.Success(productList)
+                ResultState.Success(productList)
             }
 
             is NetworkResult.Error -> {
-                UIKitResultState.Error(
-                    response.message ?: API_PRODUCT_INTERNAL_ERROR,
-                    response.code
+                ResultState.Error(
+                    ErrorMessage(
+                        code = response.code,
+                        title = "",
+                        message = response.message ?: API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.ERROR
+                    )
                 )
             }
 
             is NetworkResult.Exception -> {
-                UIKitResultState.Error(API_PRODUCT_INTERNAL_ERROR)
+                ResultState.Error(
+                    ErrorMessage(
+                        title = "",
+                        message = API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.EXCEPTION
+                    )
+                )
             }
         }
 
     }
 
-    override suspend fun fetchSaleOffers(restaurantCode: String): UIKitResultState<List<Product>> {
+    override suspend fun fetchSaleOffers(restaurantCode: String): ResultState<List<Product>> {
         val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to restaurantCode)
         return when (val response = productService.fetchSaleOffers(headerMap)) {
             is NetworkResult.Success -> {
                 val productList = response.data.payload.map { ProductResponse.mapToProduct(it) }
-                UIKitResultState.Success(productList)
+                ResultState.Success(productList)
             }
 
             is NetworkResult.Error -> {
-                UIKitResultState.Error(
-                    response.message ?: API_PRODUCT_INTERNAL_ERROR,
-                    response.code
+                ResultState.Error(
+                    ErrorMessage(
+                        code = response.code,
+                        title = "",
+                        message = response.message ?: API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.ERROR
+                    )
                 )
             }
 
             is NetworkResult.Exception -> {
-                UIKitResultState.Error(API_PRODUCT_INTERNAL_ERROR)
+                ResultState.Error(
+                    ErrorMessage(
+                        title = "",
+                        message = API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.EXCEPTION
+                    )
+                )
             }
         }
 
     }
 
-    override suspend fun fetchAppetizers(restaurantCode: String): UIKitResultState<List<Product>> {
+    override suspend fun fetchAppetizers(restaurantCode: String): ResultState<List<Product>> {
         val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to restaurantCode)
         return when (val response = productService.fetchAppetizers(headerMap)) {
             is NetworkResult.Success -> {
                 val productList = response.data.payload.map { ProductResponse.mapToProduct(it) }
-                UIKitResultState.Success(productList)
+                ResultState.Success(productList)
             }
 
             is NetworkResult.Error -> {
-                UIKitResultState.Error(
-                    response.message ?: API_PRODUCT_INTERNAL_ERROR,
-                    response.code
+                ResultState.Error(
+                    ErrorMessage(
+                        code = response.code,
+                        title = "",
+                        message = response.message ?: API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.ERROR
+                    )
                 )
             }
 
             is NetworkResult.Exception -> {
-                UIKitResultState.Error(API_PRODUCT_INTERNAL_ERROR)
+                ResultState.Error(
+                    ErrorMessage(
+                        title = "",
+                        message = API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.EXCEPTION
+                    )
+                )
             }
         }
     }
 
-    override suspend fun fetchMenu(restaurantCode: String): UIKitResultState<List<Product>> {
+    override suspend fun fetchMenu(restaurantCode: String): ResultState<List<Product>> {
         val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to restaurantCode)
         return when (val response = productService.fetchMenu(headerMap)) {
             is NetworkResult.Success -> {
                 val productList = response.data.payload.map { ProductResponse.mapToProduct(it) }
-                UIKitResultState.Success(productList)
+                ResultState.Success(productList)
             }
 
             is NetworkResult.Error -> {
-                UIKitResultState.Error(
-                    response.message ?: API_PRODUCT_INTERNAL_ERROR,
-                    response.code
+                ResultState.Error(
+                    ErrorMessage(
+                        code = response.code,
+                        title = "",
+                        message = response.message ?: API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.ERROR
+                    )
                 )
             }
 
             is NetworkResult.Exception -> {
-                UIKitResultState.Error(API_PRODUCT_INTERNAL_ERROR)
+                response.exception.printStackTrace()
+                ResultState.Error(
+                    ErrorMessage(
+                        title = "",
+                        message = API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.EXCEPTION
+                    )
+                )
             }
         }
     }
 
-    override suspend fun find(productCode: String): UIKitResultState<Product> {
+    override suspend fun find(productCode: String): ResultState<Product> {
         return when (val response = productService.find(productCode)) {
             is NetworkResult.Success -> {
                 val product = ProductResponse.mapToProduct(response.data.payload)
-                UIKitResultState.Success(product)
+                ResultState.Success(product)
             }
 
             is NetworkResult.Error -> {
-                UIKitResultState.Error(
-                    response.message ?: API_PRODUCT_INTERNAL_ERROR,
-                    response.code
+                ResultState.Error(
+                    ErrorMessage(
+                        code = response.code,
+                        title = "",
+                        message = response.message ?: API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.ERROR
+                    )
                 )
             }
 
             is NetworkResult.Exception -> {
-                UIKitResultState.Error(API_PRODUCT_INTERNAL_ERROR)
+                ResultState.Error(
+                    ErrorMessage(
+                        title = "",
+                        message = API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.EXCEPTION
+                    )
+                )
             }
         }
     }
 
-    override suspend fun find(productCode: String, measure: Measure): UIKitResultState<Product> {
+    override suspend fun find(productCode: String, measure: Measure): ResultState<Product> {
         return when (val response = productService.find(productCode, measure.code)) {
             is NetworkResult.Success -> {
                 val product = ProductResponse.mapToProduct(response.data.payload)
-                UIKitResultState.Success(product)
+                ResultState.Success(product)
             }
 
             is NetworkResult.Error -> {
-                UIKitResultState.Error(
-                    response.message ?: API_PRODUCT_INTERNAL_ERROR,
-                    response.code
+                ResultState.Error(
+                    ErrorMessage(
+                        code = response.code,
+                        title = "",
+                        message = response.message ?: API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.ERROR
+                    )
                 )
             }
 
             is NetworkResult.Exception -> {
-                UIKitResultState.Error(API_PRODUCT_INTERNAL_ERROR)
+                ResultState.Error(
+                    ErrorMessage(
+                        title = "",
+                        message = API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.EXCEPTION
+                    )
+                )
             }
         }
     }
 
-    override suspend fun hasStock(productCode: String): UIKitResultState<Boolean> {
+    override suspend fun hasStock(productCode: String): ResultState<Boolean> {
         return when (val response = productService.hasStock(productCode)) {
             is NetworkResult.Success -> {
-                UIKitResultState.Success(response.data.payload.hasStock)
+                ResultState.Success(response.data.payload.hasStock)
             }
 
             is NetworkResult.Error -> {
-                UIKitResultState.Error(
-                    response.message ?: API_PRODUCT_INTERNAL_ERROR,
-                    response.code
+                ResultState.Error(
+                    ErrorMessage(
+                        code = response.code,
+                        title = "",
+                        message = response.message ?: API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.ERROR
+                    )
                 )
             }
 
             is NetworkResult.Exception -> {
-                UIKitResultState.Error(API_PRODUCT_INTERNAL_ERROR)
+                ResultState.Error(
+                    ErrorMessage(
+                        title = "",
+                        message = API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.EXCEPTION
+                    )
+                )
             }
         }
     }
 
-    override suspend fun findSaleStrategy(productCode: String): UIKitResultState<SaleProductStrategy> {
+    override suspend fun findSaleStrategy(productCode: String): ResultState<SaleProductStrategy> {
         return when (val response = productService.findSaleStrategy(productCode)) {
             is NetworkResult.Success -> {
                 val saleStrategy =
                     ProductSaleStrategyResponse.mapToProductSaleStrategy(response.data.payload)
-                UIKitResultState.Success(saleStrategy)
+                ResultState.Success(saleStrategy)
             }
 
             is NetworkResult.Error -> {
-                UIKitResultState.Error(
-                    response.message ?: API_PRODUCT_INTERNAL_ERROR,
-                    response.code
+                ResultState.Error(
+                    ErrorMessage(
+                        code = response.code,
+                        title = "",
+                        message = response.message ?: API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.ERROR
+                    )
                 )
             }
 
             is NetworkResult.Exception -> {
-                UIKitResultState.Error(API_PRODUCT_INTERNAL_ERROR)
+                ResultState.Error(
+                    ErrorMessage(
+                        title = "",
+                        message = API_PRODUCT_INTERNAL_ERROR,
+                        errorType = ErrorType.EXCEPTION
+                    )
+                )
             }
         }
     }

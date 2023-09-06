@@ -13,7 +13,7 @@ import com.afoxplus.products.entities.Product
 import com.afoxplus.products.usecases.actions.*
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
-import com.afoxplus.uikit.result.UIKitResultState
+import com.afoxplus.uikit.result.ResultState
 import com.afoxplus.uikit.views.status.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -44,10 +44,9 @@ internal class ProductViewModel @Inject constructor(
     val productsHomeOffer: LiveData<ListState<ProductUIModel>> get() = mProductsHomeOffer
 
     fun fetchProductSales() = viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
-
         mProductsSale.postValue(ListLoading())
         when (val result = fetchProductsByCurrentRestaurant("")) {
-            is UIKitResultState.Success -> {
+            is ResultState.Success -> {
                 val data = result.data.map { item ->
                     ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_SALE, item)
                 }
@@ -59,8 +58,8 @@ internal class ProductViewModel @Inject constructor(
                     mProductsSale.postValue(ListSuccess(data))
             }
 
-            is UIKitResultState.Error -> {
-                mProductsSale.postValue(ListError(Exception(result.message)))
+            is ResultState.Error -> {
+                mProductsSale.postValue(ListError(Exception(result.errorMessage.message)))
             }
 
         }
@@ -68,7 +67,7 @@ internal class ProductViewModel @Inject constructor(
 
     fun fetchProductOffers() = viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
         when (val result = fetchSaleOfferByCurrentRestaurant()) {
-            is UIKitResultState.Success -> {
+            is ResultState.Success -> {
                 val data = result.data.map { item ->
                     ProductUIModel(ProductUIModel.VIEW_TYPE_PRODUCT_OFFER, item)
                 }
@@ -78,8 +77,8 @@ internal class ProductViewModel @Inject constructor(
                     mProductOffer.postValue(ListSuccess(data))
             }
 
-            is UIKitResultState.Error -> {
-                mProductOffer.postValue(ListError(Exception(result.message)))
+            is ResultState.Error -> {
+                mProductOffer.postValue(ListError(Exception(result.errorMessage.message)))
             }
         }
     }
@@ -88,7 +87,7 @@ internal class ProductViewModel @Inject constructor(
         viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
             mProductAppetizer.postValue(ListLoading())
             when (val result = fetchAppetizerByCurrentRestaurant()) {
-                is UIKitResultState.Success -> {
+                is ResultState.Success -> {
                     if (result.data.isEmpty())
                         mProductAppetizer.postValue(ListEmptyData())
                     else {
@@ -102,8 +101,8 @@ internal class ProductViewModel @Inject constructor(
                     }
                 }
 
-                is UIKitResultState.Error -> {
-                    mProductAppetizer.postValue(ListError(Exception(result.message)))
+                is ResultState.Error -> {
+                    mProductAppetizer.postValue(ListError(Exception(result.errorMessage.message)))
                 }
 
                 else -> {
@@ -117,7 +116,7 @@ internal class ProductViewModel @Inject constructor(
     fun fetchProductsMenu() = viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
         mProductsMenu.postValue(ListLoading())
         when (val result = fetchMenuByCurrentRestaurant()) {
-            is UIKitResultState.Success -> {
+            is ResultState.Success -> {
                 if (result.data.isEmpty()) {
                     getProductsStringsHelper.getMenuEmptyStringsUIModel().let { resource ->
                         mProductsMenu.postValue(resource.toEmptyProduct())
@@ -130,8 +129,8 @@ internal class ProductViewModel @Inject constructor(
                 }
             }
 
-            is UIKitResultState.Error -> {
-                mProductsMenu.postValue(ListError(Exception(result.message)))
+            is ResultState.Error -> {
+                mProductsMenu.postValue(ListError(Exception(result.errorMessage.message)))
             }
         }
     }
@@ -140,7 +139,7 @@ internal class ProductViewModel @Inject constructor(
         viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
             mProductsHomeOffer.postValue(ListLoading())
             when (val result = fetchHomeOffer()) {
-                is UIKitResultState.Success -> {
+                is ResultState.Success -> {
                     if (result.data.isEmpty())
                         mProductsHomeOffer.postValue(ListEmptyData())
                     else {
@@ -151,8 +150,8 @@ internal class ProductViewModel @Inject constructor(
                     }
                 }
 
-                is UIKitResultState.Error -> {
-                    mProductsHomeOffer.postValue(ListError(Exception(result.message)))
+                is ResultState.Error -> {
+                    mProductsHomeOffer.postValue(ListError(Exception(result.errorMessage.message)))
                 }
             }
         }
