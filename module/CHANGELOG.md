@@ -1,5 +1,9 @@
 # app-android-products Changelog
 
+## Version 6.0.0
+### Added
+- Se modifico el dependencies.
+
 ## Version 3.0.0
 ### Added
 - Se actualizaron las dependencias.
