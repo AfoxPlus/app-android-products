@@ -3,7 +3,6 @@ package com.afoxplus.products.delivery.views.fragments
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,12 +47,12 @@ internal class ProductSaleFragment : UIKitBaseFragment() {
             when (state) {
                 is ListSuccess ->
                     productSaleAdapter.submitList(state.data)
-                is ListLoading -> showToast("Loading...")
-                is ListError -> showToast("Internal Error")
                 is ProductViewModel.EmptyProduct -> handleEmptyProductSale(
                     getString(state.title),
                     getString(state.description)
                 )
+                is ListLoading -> onListLoading()
+                is ListError -> onListError()
             }
         }
 
@@ -61,8 +60,8 @@ internal class ProductSaleFragment : UIKitBaseFragment() {
             when (state) {
                 is ListSuccess -> setDataProductOfferAdapter(state.data)
                 is ListEmptyData -> binding.offerContent.visibility = View.GONE
-                is ListLoading -> showToast("Loading...")
-                is ListError -> showToast("Internal Error")
+                is ListLoading -> onListLoading()
+                is ListError -> onListError()
             }
         }
     }
@@ -72,10 +71,6 @@ internal class ProductSaleFragment : UIKitBaseFragment() {
         binding.layoutEmpty.lblTitle.text = title
         binding.layoutEmpty.lblDescription.text = description
         binding.layoutEmpty.container.setVisible()
-    }
-
-    private fun showToast(msg: String, duration: Int = Toast.LENGTH_SHORT) {
-        Toast.makeText(requireContext(), msg, duration).show()
     }
 
     private fun setDataProductOfferAdapter(data: List<ProductUIModel>) {
@@ -96,5 +91,13 @@ internal class ProductSaleFragment : UIKitBaseFragment() {
     private fun setupRecyclerProduct() {
         binding.recyclerProducts.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerProducts.adapter = productSaleAdapter
+    }
+
+    private fun onListLoading() {
+        //Nothing
+    }
+
+    private fun onListError() {
+        //Nothing
     }
 }
