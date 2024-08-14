@@ -21,6 +21,7 @@
         android:onClick="@{() -> onClickProductOffer.invoke(product)}"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/light_01"
         app:rippleColor="@android:color/transparent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
