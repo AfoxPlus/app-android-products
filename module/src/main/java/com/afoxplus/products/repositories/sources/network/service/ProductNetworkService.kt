@@ -2,12 +2,14 @@ package com.afoxplus.products.repositories.sources.network.service
 
 
 import com.afoxplus.network.extensions.map
+import com.afoxplus.products.entities.LandingProducts
 import com.afoxplus.products.entities.Measure
 import com.afoxplus.products.entities.Product
 import com.afoxplus.products.entities.bussineslogic.SaleProductStrategy
 import com.afoxplus.products.repositories.sources.network.ProductNetworkDataSource
 import com.afoxplus.products.repositories.sources.network.api.ProductApiNetwork
 import com.afoxplus.products.repositories.sources.network.api.request.ProductQueryRequest
+import com.afoxplus.products.repositories.sources.network.api.response.LandingProductsResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductSaleStrategyResponse
 import java.io.IOException
@@ -90,6 +92,15 @@ internal class ProductNetworkService @Inject constructor(
         }
         return saleStrategy ?: throw IOException(API_PRODUCT_INTERNAL_ERROR)
     }
+
+    override suspend fun findLandingProducts(restaurantCode: String): LandingProducts {
+        val headerMap = mapOf(API_PRODUCT_HEADERS_RESTAURANT_CODE to restaurantCode)
+        val response = productService.fetchLandingProducts(headerMap)
+        var landingProducts: LandingProducts? = null
+        response.map { landingProducts = LandingProductsResponse.mapToLandingProduct(it.payload) }
+        return landingProducts ?: throw IOException(API_PRODUCT_INTERNAL_ERROR)
+    }
+
 
     companion object {
         private const val API_PRODUCT_INTERNAL_ERROR: String = "API Products Internal Error"

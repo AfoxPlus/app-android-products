@@ -1,5 +1,6 @@
 package com.afoxplus.products.repositories.sources.network
 
+import com.afoxplus.products.entities.LandingProducts
 import com.afoxplus.products.entities.Measure
 import com.afoxplus.products.entities.Product
 import com.afoxplus.products.entities.bussineslogic.SaleProductStrategy
@@ -14,4 +15,5 @@ internal interface ProductNetworkDataSource {
     suspend fun find(productCode: String, measure: Measure): Product
     suspend fun hasStock(productCode: String): Boolean
     suspend fun findSaleStrategy(productCode: String): SaleProductStrategy
+    suspend fun findLandingProducts(restaurantCode: String): LandingProducts
 }
