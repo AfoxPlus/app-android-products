@@ -43,4 +43,7 @@ internal interface ProductUseCaseModule {
 
     @Binds
     fun GetProductsStringsHelper(getProductsStringsHelper: GetProductsStringsHelperImpl): GetProductsStringsHelper
+
+    @Binds
+    fun bindFetchLandingProducts(fetchLandingProducts: FetchLandingProductsByCurrentRestaurantUseCase): FetchLandingProductsByCurrentRestaurant
 }

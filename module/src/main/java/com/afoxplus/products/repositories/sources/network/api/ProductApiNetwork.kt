@@ -4,6 +4,7 @@ import com.afoxplus.network.annotations.ServiceClient
 import com.afoxplus.network.api.UrlProvider
 import com.afoxplus.network.response.BaseResponse
 import com.afoxplus.products.repositories.sources.network.api.request.ProductQueryRequest
+import com.afoxplus.products.repositories.sources.network.api.response.LandingProductsResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductSaleStrategyResponse
 import com.afoxplus.products.repositories.sources.network.api.response.ProductStockResponse
@@ -51,4 +52,8 @@ internal interface ProductApiNetwork {
 
     @GET("$PATH_PRODUCT/$PATH_STRATEGY/{product_code}")
     suspend fun findSaleStrategy(@Path("product_code") productCode: String): Response<BaseResponse<ProductSaleStrategyResponse>>
+
+    @GET("v1/$PATH_PRODUCT/menu")
+    suspend fun fetchLandingProducts(@HeaderMap headers: Map<String, String>): Response<BaseResponse<LandingProductsResponse>>
+
 }

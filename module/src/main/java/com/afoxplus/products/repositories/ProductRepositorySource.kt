@@ -1,5 +1,6 @@
 package com.afoxplus.products.repositories
 
+import com.afoxplus.products.entities.LandingProducts
 import com.afoxplus.products.entities.Measure
 import com.afoxplus.products.entities.Product
 import com.afoxplus.products.entities.bussineslogic.SaleProductStrategy
@@ -36,4 +37,6 @@ internal class ProductRepositorySource @Inject constructor(
     override suspend fun findSaleStrategy(code: String): SaleProductStrategy =
         productNetworkDataSource.findSaleStrategy(code)
 
+    override suspend fun fetchLandingProducts(restaurantCode: String): LandingProducts =
+        productNetworkDataSource.findLandingProducts(restaurantCode)
 }
