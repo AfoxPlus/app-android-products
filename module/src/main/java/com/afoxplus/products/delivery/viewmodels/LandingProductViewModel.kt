@@ -29,7 +29,7 @@ internal class LandingProductViewModel @Inject constructor(
 
     private fun loadProducts() {
         viewModelScope.launch(uiKitCoroutineDispatcher.getIODispatcher()) {
-            val productData = fetchLandingProductsByCurrentRestaurant.invoke()
+            val productData = fetchLandingProductsByCurrentRestaurant()
             _productSections.value = productData?.establishmentSection ?: listOf()
         }
     }

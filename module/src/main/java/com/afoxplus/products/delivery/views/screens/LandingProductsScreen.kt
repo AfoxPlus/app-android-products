@@ -103,7 +103,7 @@ fun NonScrollableGrid(
     columns: Int,
     itemContent: @Composable (Product) -> Unit
 ) {
-    val rows = ceil(products.size / columns.toDouble()).toInt()  // Calculate number of rows
+    val rows = ceil(products.size / columns.toDouble()).toInt()
 
     Column(
         modifier = Modifier.fillMaxWidth(),
