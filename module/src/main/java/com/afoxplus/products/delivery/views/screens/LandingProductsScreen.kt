@@ -15,19 +15,23 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.afoxplus.products.delivery.viewmodels.LandingProductViewModel
+import com.afoxplus.products.entities.EstablishmentSection
 import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.common.UIState
 import com.afoxplus.uikit.designsystem.atoms.UIKitText
 import com.afoxplus.uikit.designsystem.businesscomponents.UIKitProductHorizontalItem
 import com.afoxplus.uikit.designsystem.businesscomponents.UIKitProductItem
 import com.afoxplus.uikit.designsystem.foundations.UIKitColorTheme
 import com.afoxplus.uikit.designsystem.foundations.UIKitTheme
 import com.afoxplus.uikit.designsystem.foundations.UIKitTypographyTheme
+import com.afoxplus.uikit.designsystem.molecules.UIKitLoading
 import kotlin.math.ceil
 
-@Composable()
+@Composable
 fun LandingProductScreen(modifier: Modifier = Modifier) {
     LandingProductScreen(modifier = modifier, viewModel = hiltViewModel())
 }
@@ -38,7 +42,39 @@ internal fun LandingProductScreen(
     viewModel: LandingProductViewModel
 ) {
     val productSections by viewModel.productSections.collectAsState()
+    Box(modifier = modifier.fillMaxSize()) {
+        when (productSections) {
+            is UIState.OnError -> HandleOnError(
+                modifier = Modifier.align(Alignment.TopCenter),
+                message = (productSections as UIState.OnError<List<EstablishmentSection>>).uiException.message.orEmpty()
+            )
 
+            is UIState.OnLoading -> UIKitLoading(
+                modifier = Modifier.align(Alignment.Center),
+                circleSize = UIKitTheme.spacing.spacing12
+            )
+
+            is UIState.OnSuccess -> HandleOnSuccess(
+                modifier = Modifier.fillMaxSize(),
+                productSections = (productSections as UIState.OnSuccess<List<EstablishmentSection>>).data,
+                onProductClick = {
+                    viewModel.onProductClicked(it)
+                })
+        }
+    }
+}
+
+@Composable
+internal fun HandleOnError(modifier: Modifier = Modifier, message: String) {
+    UIKitText(modifier = modifier, text = message, style = UIKitTypographyTheme.header02SemiBold)
+}
+
+@Composable
+internal fun HandleOnSuccess(
+    modifier: Modifier = Modifier,
+    productSections: List<EstablishmentSection>,
+    onProductClick: (product: Product) -> Unit
+) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(UIKitTheme.spacing.spacing12),
@@ -75,9 +111,7 @@ internal fun LandingProductScreen(
                             title = product.name,
                             description = product.description,
                             price = product.getPriceForSaleWithFormat(),
-                            onClick = {
-                                viewModel.onProductClicked(product)
-                            }
+                            onClick = { onProductClick(product) }
                         )
                     } else {
                         UIKitProductItem(
@@ -85,9 +119,7 @@ internal fun LandingProductScreen(
                             title = product.name,
                             description = product.description,
                             price = product.getPriceForSaleWithFormat(),
-                            onClick = {
-                                viewModel.onProductClicked(product)
-                            }
+                            onClick = { onProductClick(product) }
                         )
                     }
                 }
@@ -95,7 +127,6 @@ internal fun LandingProductScreen(
         }
     }
 }
-
 
 @Composable
 fun NonScrollableGrid(
