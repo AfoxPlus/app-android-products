@@ -9,7 +9,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -32,17 +36,24 @@ import com.afoxplus.uikit.designsystem.molecules.UIKitLoading
 import kotlin.math.ceil
 
 @Composable
-fun LandingProductScreen(modifier: Modifier = Modifier) {
-    LandingProductScreen(modifier = modifier, viewModel = hiltViewModel())
+fun LandingProductScreen(modifier: Modifier = Modifier, paddingValues: PaddingValues) {
+    LandingProductScreen(modifier = modifier, paddingValues, viewModel = hiltViewModel())
 }
 
 @Composable
 internal fun LandingProductScreen(
     modifier: Modifier = Modifier,
+    paddingValues: PaddingValues,
     viewModel: LandingProductViewModel
 ) {
     val productSections by viewModel.productSections.collectAsState()
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .navigationBarsPadding()
+            .statusBarsPadding()
+            .imePadding()
+    ) {
         when (productSections) {
             is UIState.OnError -> HandleOnError(
                 modifier = Modifier.align(Alignment.TopCenter),
@@ -56,6 +67,7 @@ internal fun LandingProductScreen(
 
             is UIState.OnSuccess -> HandleOnSuccess(
                 modifier = Modifier.fillMaxSize(),
+                paddingValues = paddingValues,
                 productSections = (productSections as UIState.OnSuccess<List<EstablishmentSection>>).data,
                 onProductClick = {
                     viewModel.onProductClicked(it)
@@ -72,11 +84,14 @@ internal fun HandleOnError(modifier: Modifier = Modifier, message: String) {
 @Composable
 internal fun HandleOnSuccess(
     modifier: Modifier = Modifier,
+    paddingValues: PaddingValues,
     productSections: List<EstablishmentSection>,
     onProductClick: (product: Product) -> Unit
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(paddingValues),
         verticalArrangement = Arrangement.spacedBy(UIKitTheme.spacing.spacing12),
         contentPadding = PaddingValues(UIKitTheme.spacing.spacing12)
     ) {
